@@ -20,14 +20,14 @@ const Hero = () => {
       title: "Digital Optimization Experts",
       subtitle: "Cloud Solutions Specialists",
       description: "Enhance productivity with our tailored implementation and consulting services.",
-      video: "https://assets.mixkit.co/videos/preview/mixkit-team-meeting-in-a-modern-office-space-12346-large.mp4",
+      video: "/video2.mp4",
       cta: "View Case Studies"
     },
     {
       title: "Data-Driven Decision Making",
       subtitle: "Business Intelligence Partners",
       description: "Leverage real-time analytics to transform your operations.",
-      video: "https://assets.mixkit.co/videos/preview/mixkit-woman-analyzing-data-on-her-laptop-12347-large.mp4",
+      video: "/video3.mp4",
       cta: "Request Consultation"
     }
   ];
@@ -63,7 +63,7 @@ const Hero = () => {
       height: '100vh',
       minHeight: '800px',
       overflow: 'hidden',
-      bgcolor: 'background.default',
+      backgroundColor: '#f8fafc', // Light gray background fallback
     }}>
       {/* Video Background */}
       <Box
@@ -93,7 +93,7 @@ const Hero = () => {
         left: 0,
         width: '100%',
         height: '100%',
-        background: 'linear-gradient(to right, rgba(255, 255, 255, 0.2) 0%, rgba(255,255,255,0.2) 100%)',
+        background: 'linear-gradient(to right, rgba(248, 250, 252, 0.3) 0%, rgba(248, 250, 252, 0.3) 100%)',
         zIndex: 1
       }} />
 
@@ -117,9 +117,18 @@ const Hero = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8 }}
           >
+            {/* Gradient top border - matches navbar */}
+            <Box sx={{
+              width: '80px',
+              height: '4px',
+              background: 'linear-gradient(to right, #059669, #0d9488)',
+              mb: 3,
+              borderRadius: '2px'
+            }} />
+
             <Typography variant="overline" sx={{
               display: 'block',
-              color: 'primary.main',
+              color: '#059669', // Emerald 600
               fontSize: '0.9rem',
               fontWeight: 600,
               letterSpacing: '2px',
@@ -133,7 +142,7 @@ const Hero = () => {
               fontWeight: 800,
               lineHeight: 1.2,
               mb: 3,
-              color: 'text.primary',
+              color: '#1e293b', // Gray 800
               maxWidth: '800px'
             }}>
               {slides[currentSlide].title}
@@ -141,7 +150,7 @@ const Hero = () => {
 
             <Typography variant="body1" sx={{
               fontSize: '1.2rem',
-              color: 'text.secondary',
+              color: '#475569', // Gray 600
               maxWidth: '600px',
               mb: 4
             }}>
@@ -159,7 +168,11 @@ const Hero = () => {
                   fontSize: '1rem',
                   fontWeight: 600,
                   borderRadius: '8px',
-                  boxShadow: 2
+                  background: 'linear-gradient(to right, #059669, #0d9488)', // Emerald to teal
+                  '&:hover': {
+                    background: 'linear-gradient(to right, #047857, #0f766e)', // Darker emerald to teal
+                    boxShadow: '0 4px 6px -1px rgba(5, 150, 105, 0.3)'
+                  }
                 }}
               >
                 {slides[currentSlide].cta}
@@ -175,9 +188,11 @@ const Hero = () => {
                   fontSize: '1rem',
                   fontWeight: 500,
                   borderRadius: '8px',
-                  borderWidth: '2px',
+                  borderColor: '#94a3b8', // Gray 400
+                  color: '#334155', // Gray 700
                   '&:hover': {
-                    borderWidth: '2px'
+                    borderColor: '#64748b', // Gray 500
+                    backgroundColor: 'rgba(241, 245, 249, 0.5)' // Gray 50 with opacity
                   }
                 }}
                 onClick={() => setIsPlaying(!isPlaying)}
@@ -201,14 +216,15 @@ const Hero = () => {
           <IconButton
             onClick={prevSlide}
             sx={{
-              bgcolor: 'background.paper',
+              bgcolor: 'white',
               boxShadow: 1,
+              border: '1px solid #e2e8f0', // Gray 200
               '&:hover': {
-                bgcolor: 'action.hover'
+                bgcolor: '#f1f5f9' // Gray 50
               }
             }}
           >
-            <ChevronLeft />
+            <ChevronLeft sx={{ color: '#334155' }} /> {/* Gray 700 */}
           </IconButton>
 
           <Box sx={{ display: 'flex', gap: 1 }}>
@@ -220,7 +236,7 @@ const Hero = () => {
                   width: index === currentSlide ? '24px' : '12px',
                   height: '12px',
                   borderRadius: '6px',
-                  bgcolor: index === currentSlide ? 'primary.main' : 'action.disabled',
+                  bgcolor: index === currentSlide ? '#059669' : '#cbd5e1', // Emerald 600 or Gray 300
                   cursor: 'pointer',
                   transition: 'all 0.3s ease'
                 }}
@@ -231,14 +247,15 @@ const Hero = () => {
           <IconButton
             onClick={nextSlide}
             sx={{
-              bgcolor: 'background.paper',
+              bgcolor: 'white',
               boxShadow: 1,
+              border: '1px solid #e2e8f0', // Gray 200
               '&:hover': {
-                bgcolor: 'action.hover'
+                bgcolor: '#f1f5f9' // Gray 50
               }
             }}
           >
-            <ChevronRight />
+            <ChevronRight sx={{ color: '#334155' }} /> {/* Gray 700 */}
           </IconButton>
         </Box>
 
@@ -250,11 +267,12 @@ const Hero = () => {
           transform: { xs: 'translateX(50%)', md: 'none' },
           display: 'flex',
           gap: 4,
-          bgcolor: 'background.paper',
+          bgcolor: 'white',
           px: 4,
           py: 2,
           borderRadius: '12px',
-          boxShadow: 3
+          boxShadow: 3,
+          border: '1px solid #e2e8f0' // Gray 200
         }}>
           {[
             { value: '200+', label: 'Projects' },
@@ -262,10 +280,10 @@ const Hero = () => {
             { value: '15+', label: 'Years' }
           ].map((stat, index) => (
             <Box key={index} sx={{ textAlign: 'center' }}>
-              <Typography variant="h5" sx={{ fontWeight: 700, color: 'primary.main' }}>
+              <Typography variant="h5" sx={{ fontWeight: 700, color: '#059669' }}> {/* Emerald 600 */}
                 {stat.value}
               </Typography>
-              <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+              <Typography variant="caption" sx={{ color: '#64748b' }}> {/* Gray 500 */}
                 {stat.label}
               </Typography>
             </Box>

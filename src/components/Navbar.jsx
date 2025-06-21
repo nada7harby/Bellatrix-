@@ -1,341 +1,264 @@
-import { AppBar, Toolbar, Typography, Button, Box, IconButton, Menu, MenuItem, Fade, Container } from '@mui/material';
-import { Menu as MenuIcon, Close as CloseIcon, ArrowDropDown as ArrowDropDownIcon } from '@mui/icons-material';
-import { useState } from 'react';
+import { useState, useEffect } from "react";
+import { Bars3Icon, XMarkIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
+import { motion } from "framer-motion";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [servicesMenuAnchor, setServicesMenuAnchor] = useState(null);
-  const [industriesMenuAnchor, setIndustriesMenuAnchor] = useState(null);
+  const [openDropdown, setOpenDropdown] = useState(null);
+  const [scrolled, setScrolled] = useState(false);
 
-  const handleServicesMenuOpen = (event) => {
-    setServicesMenuAnchor(event.currentTarget);
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 10;
+      if (isScrolled !== scrolled) {
+        setScrolled(isScrolled);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [scrolled]);
+
+  const toggleDropdown = (dropdown) => {
+    setOpenDropdown(openDropdown === dropdown ? null : dropdown);
   };
 
-  const handleIndustriesMenuOpen = (event) => {
-    setIndustriesMenuAnchor(event.currentTarget);
-  };
+  const services = [
+    "NetSuite Implementation",
+    "Custom Development",
+    "System Integration",
+    "Cloud Migration",
+    "Data Analytics",
+  ];
 
-  const handleMenuClose = () => {
-    setServicesMenuAnchor(null);
-    setIndustriesMenuAnchor(null);
-  };
+  const industries = [
+    "Manufacturing",
+    "Retail",
+    "Professional Services",
+    "Healthcare",
+    "Education",
+  ];
 
   return (
-    <AppBar 
-      position="fixed" 
-      elevation={0}
-      sx={{
-        backgroundColor: 'rgba(255, 255, 255, 0.95)',
-        backdropFilter: 'blur(10px)',
-        borderBottom: '1px solid',
-        borderColor: 'divider',
-        color: 'text.primary',
-        transition: 'all 0.3s ease',
-        '&:hover': {
-          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)'
-        }
-      }}
+    <nav
+      className={`fixed w-full z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-white/90 backdrop-blur-sm shadow-sm border-b border-gray-100"
+          : "bg-white"
+      }`}
     >
-      <Container maxWidth="xl">
-        <Toolbar disableGutters sx={{ py: 1 }}>
+      {/* Accent top border */}
+      <div className="h-1 bg-gradient-to-r from-emerald-500 to-teal-500"></div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-20 items-center">
           {/* Logo */}
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 4,
-              fontWeight: 800,
-              letterSpacing: '0.5px',
-              color: 'primary.main',
-              textDecoration: 'none',
-              display: 'flex',
-              alignItems: 'center',
-              '&:hover': {
-                opacity: 0.9
-              }
-            }}
-          >
-            <Box component="span" sx={{ 
-              bgcolor: 'primary.main', 
-              color: 'white', 
-              px: 1, 
-              py: 0.5, 
-              borderRadius: 1,
-              mr: 1
-            }}>
-              BELLA
-            </Box>
-            TRIX
-          </Typography>
+          <a href="/" className="flex items-center">
+            <span className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-3 py-1.5 rounded-md mr-2 text-lg font-bold">
+              B
+            </span>
+            <span
+              className={`text-xl font-semibold text-gray-800 transition-all duration-300 ${
+                scrolled ? "opacity-0 w-0" : "opacity-100"
+              }`}
+            >
+              ELLATRIX
+            </span>
+          </a>
 
           {/* Desktop Navigation */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end', gap: 1 }}>
+          <div className="hidden md:flex items-center space-x-2">
             {/* Services Dropdown */}
-            <Button
-              variant="text"
-              endIcon={<ArrowDropDownIcon />}
-              onClick={handleServicesMenuOpen}
-              sx={{
-                color: 'text.primary',
-                fontWeight: 500,
-                '&:hover': {
-                  bgcolor: 'action.hover'
-                }
-              }}
-            >
-              Services
-            </Button>
-            
-            <Menu
-              anchorEl={servicesMenuAnchor}
-              open={Boolean(servicesMenuAnchor)}
-              onClose={handleMenuClose}
-              TransitionComponent={Fade}
-              PaperProps={{
-                elevation: 3,
-                sx: {
-                  mt: 1.5,
-                  minWidth: 200,
-                  borderRadius: 2,
-                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.1)',
-                  overflow: 'visible',
-                  '&:before': {
-                    content: '""',
-                    display: 'block',
-                    position: 'absolute',
-                    top: 0,
-                    right: 14,
-                    width: 10,
-                    height: 10,
-                    bgcolor: 'background.paper',
-                    transform: 'translateY(-50%) rotate(45deg)',
-                    zIndex: 0
-                  }
-                }
-              }}
-            >
-              {['NetSuite Implementation', 'Custom Development', 'System Integration', 'Cloud Migration', 'Data Analytics'].map((item) => (
-                <MenuItem 
-                  key={item} 
-                  onClick={handleMenuClose}
-                  sx={{
-                    py: 1.5,
-                    '&:hover': {
-                      bgcolor: 'primary.lighter'
-                    }
-                  }}
+            <div className="relative">
+              <button
+                onClick={() => toggleDropdown("services")}
+                className={`flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${
+                  openDropdown === "services"
+                    ? "text-teal-700 bg-teal-50"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                }`}
+              >
+                <span>Services</span>
+                <ChevronDownIcon
+                  className={`ml-2 h-4 w-4 transition-transform ${
+                    openDropdown === "services" ? "rotate-180 text-teal-600" : "text-gray-400"
+                  }`}
+                />
+              </button>
+
+              {openDropdown === "services" && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-100 z-50"
                 >
-                  {item}
-                </MenuItem>
-              ))}
-            </Menu>
+                  <div className="py-1.5">
+                    {services.map((item) => (
+                      <a
+                        key={item}
+                        href="#"
+                        className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-teal-50 hover:text-teal-700 transition-colors"
+                      >
+                        {item}
+                      </a>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </div>
 
             {/* Industries Dropdown */}
-            <Button
-              variant="text"
-              endIcon={<ArrowDropDownIcon />}
-              onClick={handleIndustriesMenuOpen}
-              sx={{
-                color: 'text.primary',
-                fontWeight: 500,
-                '&:hover': {
-                  bgcolor: 'action.hover'
-                }
-              }}
-            >
-              Industries
-            </Button>
-            
-            <Menu
-              anchorEl={industriesMenuAnchor}
-              open={Boolean(industriesMenuAnchor)}
-              onClose={handleMenuClose}
-              TransitionComponent={Fade}
-              PaperProps={{
-                elevation: 3,
-                sx: {
-                  mt: 1.5,
-                  minWidth: 200,
-                  borderRadius: 2,
-                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.1)',
-                  overflow: 'visible',
-                  '&:before': {
-                    content: '""',
-                    display: 'block',
-                    position: 'absolute',
-                    top: 0,
-                    right: 14,
-                    width: 10,
-                    height: 10,
-                    bgcolor: 'background.paper',
-                    transform: 'translateY(-50%) rotate(45deg)',
-                    zIndex: 0
-                  }
-                }
-              }}
-            >
-              {['Manufacturing', 'Retail', 'Professional Services', 'Healthcare', 'Education'].map((item) => (
-                <MenuItem 
-                  key={item} 
-                  onClick={handleMenuClose}
-                  sx={{
-                    py: 1.5,
-                    '&:hover': {
-                      bgcolor: 'primary.lighter'
-                    }
-                  }}
-                >
-                  {item}
-                </MenuItem>
-              ))}
-            </Menu>
+            <div className="relative">
+              <button
+                onClick={() => toggleDropdown("industries")}
+                className={`flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${
+                  openDropdown === "industries"
+                    ? "text-teal-700 bg-teal-50"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                }`}
+              >
+                <span>Industries</span>
+                <ChevronDownIcon
+                  className={`ml-2 h-4 w-4 transition-transform ${
+                    openDropdown === "industries" ? "rotate-180 text-teal-600" : "text-gray-400"
+                  }`}
+                />
+              </button>
 
-            <Button
-              variant="text"
-              sx={{
-                color: 'text.primary',
-                fontWeight: 500,
-                '&:hover': {
-                  bgcolor: 'action.hover'
-                }
-              }}
+              {openDropdown === "industries" && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-100 z-50"
+                >
+                  <div className="py-1.5">
+                    {industries.map((item) => (
+                      <a
+                        key={item}
+                        href="#"
+                        className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-teal-50 hover:text-teal-700 transition-colors"
+                      >
+                        {item}
+                      </a>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </div>
+
+            <a
+              href="#"
+              className="px-4 py-2.5 text-sm font-medium text-gray-600 hover:text-gray-900 rounded-lg hover:bg-gray-50 transition-colors"
             >
               About
-            </Button>
+            </a>
 
-            <Button
-              variant="contained"
-              sx={{
-                ml: 2,
-                fontWeight: 600,
-                boxShadow: 'none',
-                '&:hover': {
-                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
-                }
-              }}
+            <a
+              href="#"
+              className="ml-2 px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-sm font-medium rounded-lg hover:shadow-md transition-all hover:from-emerald-700 hover:to-teal-700"
             >
               Contact
-            </Button>
-          </Box>
+            </a>
+          </div>
 
-          {/* Mobile Menu Button */}
-          <IconButton
-            size="large"
-            edge="end"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            sx={{ 
-              display: { xs: 'flex', md: 'none' },
-              color: 'text.primary'
-            }}
-          >
-            {mobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
-          </IconButton>
-        </Toolbar>
-
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <Box sx={{ 
-            display: { xs: 'block', md: 'none' },
-            py: 1,
-            borderTop: '1px solid',
-            borderColor: 'divider'
-          }}>
-            <Button
-              fullWidth
-              sx={{ 
-                justifyContent: 'flex-start',
-                px: 3,
-                py: 1.5,
-                textAlign: 'left'
-              }}
-              endIcon={<ArrowDropDownIcon />}
-              onClick={handleServicesMenuOpen}
+          {/* Mobile menu button */}
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:outline-none"
             >
-              Services
-            </Button>
-            
-            <Box sx={{ pl: 4 }}>
-              {['NetSuite Implementation', 'Custom Development', 'System Integration'].map((item) => (
-                <Button
-                  key={item}
-                  fullWidth
-                  sx={{ 
-                    justifyContent: 'flex-start',
-                    px: 3,
-                    py: 1.5,
-                    textAlign: 'left',
-                    fontSize: '0.875rem'
-                  }}
-                >
-                  {item}
-                </Button>
-              ))}
-            </Box>
+              {mobileMenuOpen ? (
+                <XMarkIcon className="block h-6 w-6" />
+              ) : (
+                <Bars3Icon className="block h-6 w-6" />
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
 
-            <Button
-              fullWidth
-              sx={{ 
-                justifyContent: 'flex-start',
-                px: 3,
-                py: 1.5,
-                textAlign: 'left'
-              }}
-              endIcon={<ArrowDropDownIcon />}
-              onClick={handleIndustriesMenuOpen}
-            >
-              Industries
-            </Button>
-            
-            <Box sx={{ pl: 4 }}>
-              {['Manufacturing', 'Retail', 'Professional Services'].map((item) => (
-                <Button
-                  key={item}
-                  fullWidth
-                  sx={{ 
-                    justifyContent: 'flex-start',
-                    px: 3,
-                    py: 1.5,
-                    textAlign: 'left',
-                    fontSize: '0.875rem'
-                  }}
-                >
-                  {item}
-                </Button>
-              ))}
-            </Box>
+      {/* Mobile menu */}
+      {mobileMenuOpen && (
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="md:hidden bg-white shadow-lg"
+        >
+          <div className="px-2 pt-2 pb-4 space-y-1">
+            {/* Mobile Services Dropdown */}
+            <div>
+              <button
+                onClick={() => toggleDropdown("mobileServices")}
+                className="w-full flex justify-between items-center px-3 py-3 text-base font-medium text-gray-700 rounded-lg hover:bg-gray-50"
+              >
+                <span>Services</span>
+                <ChevronDownIcon
+                  className={`h-5 w-5 transition-transform ${
+                    openDropdown === "mobileServices" ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+              {openDropdown === "mobileServices" && (
+                <div className="pl-4">
+                  {services.slice(0, 3).map((item) => (
+                    <a
+                      key={item}
+                      href="#"
+                      className="block px-3 py-2.5 text-sm text-gray-600 rounded-lg hover:bg-teal-50 hover:text-teal-700"
+                    >
+                      {item}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
 
-            <Button
-              fullWidth
-              sx={{ 
-                justifyContent: 'flex-start',
-                px: 3,
-                py: 1.5,
-                textAlign: 'left'
-              }}
+            {/* Mobile Industries Dropdown */}
+            <div>
+              <button
+                onClick={() => toggleDropdown("mobileIndustries")}
+                className="w-full flex justify-between items-center px-3 py-3 text-base font-medium text-gray-700 rounded-lg hover:bg-gray-50"
+              >
+                <span>Industries</span>
+                <ChevronDownIcon
+                  className={`h-5 w-5 transition-transform ${
+                    openDropdown === "mobileIndustries" ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+              {openDropdown === "mobileIndustries" && (
+                <div className="pl-4">
+                  {industries.slice(0, 3).map((item) => (
+                    <a
+                      key={item}
+                      href="#"
+                      className="block px-3 py-2.5 text-sm text-gray-600 rounded-lg hover:bg-teal-50 hover:text-teal-700"
+                    >
+                      {item}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <a
+              href="#"
+              className="block px-3 py-3 text-base font-medium text-gray-700 rounded-lg hover:bg-gray-50"
             >
               About
-            </Button>
+            </a>
 
-            <Button
-              fullWidth
-              variant="contained"
-              sx={{ 
-                mt: 1,
-                mx: 2,
-                py: 1.5,
-                fontWeight: 600
-              }}
+            <a
+              href="#"
+              className="block w-full px-4 py-3 mt-2 text-center bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-medium rounded-lg hover:from-emerald-700 hover:to-teal-700"
             >
               Contact
-            </Button>
-          </Box>
-        )}
-      </Container>
-    </AppBar>
+            </a>
+          </div>
+        </motion.div>
+      )}
+    </nav>
   );
 };
 
 export default Navbar;
-
