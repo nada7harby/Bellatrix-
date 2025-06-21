@@ -14,6 +14,8 @@ function LandingPage() {
       <Navbar />
       <Hero />
       <Services />
+      <Testimonials></Testimonials>
+      <Industries/>
      
     </div>
   );

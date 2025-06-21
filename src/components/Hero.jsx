@@ -93,7 +93,7 @@ const Hero = () => {
         left: 0,
         width: '100%',
         height: '100%',
-        background: 'linear-gradient(to right, rgba(248, 250, 252, 0.3) 0%, rgba(248, 250, 252, 0.3) 100%)',
+        background: 'linear-gradient(to right, rgba(248, 250, 252, 0.2) 0%, rgba(248, 250, 252, 0.2) 100%)',
         zIndex: 1
       }} />
 
