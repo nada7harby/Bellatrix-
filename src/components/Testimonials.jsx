@@ -1,10 +1,11 @@
 import { useState, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCards, Autoplay, Pagination } from 'swiper/modules';
+import { EffectCoverflow, Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { motion, AnimatePresence } from 'framer-motion';
 import 'swiper/css';
-import 'swiper/css/effect-cards';
+import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
 const testimonials = [
   {
@@ -13,49 +14,54 @@ const testimonials = [
     name: "John Doe",
     title: "CEO of TechCorp",
     avatar: "JD",
-    rating: 5
+    rating: 5,
+    results: ["40% efficiency boost", "Seamless migration", "24/7 support"]
   },
   {
     id: 2,
-    quote: "The implementation process was seamless, and the support has been outstanding.",
+    quote: "The implementation was flawless. Their team delivered beyond expectations.",
     name: "Jane Smith",
     title: "COO of Innovate Inc.",
     avatar: "JS",
-    rating: 5
+    rating: 5,
+    results: ["50% faster deployment", "Zero downtime", "Custom integrations"]
   },
   {
     id: 3,
-    quote: "Thanks to Bellatrix, our productivity has increased by 40%. Highly recommended!",
+    quote: "Our productivity skyrocketed by 40% after switching to Bellatrix.",
     name: "Sam Wilson",
     title: "CFO of Global Solutions",
     avatar: "SW",
-    rating: 5
+    rating: 5,
+    results: ["Real-time analytics", "Cost savings", "Scalable infrastructure"]
   },
   {
     id: 4,
-    quote: "Professional team with exceptional technical skills and business understanding.",
+    quote: "Exceptional technical skills with deep business understanding.",
     name: "Sarah Johnson",
     title: "Director of Operations",
     avatar: "SJ",
-    rating: 4
+    rating: 4,
+    results: ["Automated workflows", "User-friendly UI", "Training included"]
   },
   {
     id: 5,
-    quote: "The best investment we've made in our digital transformation journey.",
+    quote: "The best investment in our digital transformation journey.",
     name: "Michael Brown",
     title: "IT Manager",
     avatar: "MB",
-    rating: 5
-  },
+    rating: 5,
+    results: ["Cloud optimization", "Security upgrades", "API integrations"]
+  }
 ];
 
 const Testimonials = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [expandedTestimonial, setExpandedTestimonial] = useState(null);
+  const [selectedTestimonial, setSelectedTestimonial] = useState(null);
+  const [isExpanded, setIsExpanded] = useState(false);
   const swiperRef = useRef(null);
 
   const handleSlideChange = (swiper) => {
-    setActiveIndex(swiper.realIndex);
+    setSelectedTestimonial(testimonials[swiper.realIndex]);
   };
 
   const renderStars = (rating) => {
@@ -72,7 +78,7 @@ const Testimonials = () => {
 
   return (
     <section className="relative py-20 sm:py-32 bg-gradient-to-b from-gray-50 to-white overflow-hidden">
-      {/* Animated background elements */}
+      {/* Floating Gradient Blobs (Background Animation) */}
       <div className="absolute inset-0 overflow-hidden opacity-10">
         {[...Array(8)].map((_, i) => (
           <motion.div
@@ -99,6 +105,7 @@ const Testimonials = () => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
+        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -108,20 +115,20 @@ const Testimonials = () => {
         >
           <h2 className="text-4xl font-bold text-gray-900 sm:text-5xl mb-4">
             <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-              Client Success Stories
+              Trusted by Industry Leaders
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Trusted by innovative companies worldwide to transform their operations
+            Don’t just take our word for it—here’s what our clients say.
           </p>
         </motion.div>
 
-        {/* 3D Carousel */}
+        {/* Responsive 3D Carousel */}
         <div className="max-w-7xl mx-auto relative">
           <Swiper
             ref={swiperRef}
-            modules={[EffectCards, Autoplay, Pagination]}
-            effect={'cards'}
+            modules={[EffectCoverflow, Autoplay, Pagination, Navigation]}
+            effect={'coverflow'}
             grabCursor={true}
             centeredSlides={true}
             slidesPerView={'auto'}
@@ -130,19 +137,45 @@ const Testimonials = () => {
               delay: 6000,
               disableOnInteraction: false,
             }}
+            coverflowEffect={{
+              rotate: 0,
+              stretch: 0,
+              depth: 100,
+              modifier: 2.5,
+              slideShadows: false,
+            }}
             pagination={{
               clickable: true,
               el: '.testimonial-pagination',
             }}
+            navigation={{
+              nextEl: '.testimonial-next',
+              prevEl: '.testimonial-prev',
+            }}
             onSlideChange={handleSlideChange}
-            className="w-full max-w-md sm:max-w-xl md:max-w-2xl h-[500px]"
+            breakpoints={{
+              // Mobile: 1 slide
+              0: {
+                slidesPerView: 1,
+                spaceBetween: 20,
+              },
+              // Desktop: 3 slides
+              1024: {
+                slidesPerView: 3,
+                spaceBetween: 40,
+              }
+            }}
+            className="w-full h-[500px]"
           >
             {testimonials.map((testimonial) => (
               <SwiperSlide key={testimonial.id} className="bg-white rounded-3xl overflow-hidden shadow-xl">
                 <motion.div 
-                  className="h-full p-8 flex flex-col"
+                  className="h-full p-8 flex flex-col cursor-pointer"
                   whileHover={{ scale: 1.02 }}
-                  onClick={() => setExpandedTestimonial(testimonial)}
+                  onClick={() => {
+                    setSelectedTestimonial(testimonial);
+                    setIsExpanded(true);
+                  }}
                 >
                   <div className="flex-grow">
                     <div className="flex justify-between items-start mb-6">
@@ -168,48 +201,30 @@ const Testimonials = () => {
             ))}
           </Swiper>
 
-          {/* Custom pagination */}
+          {/* Custom Navigation & Pagination */}
           <div className="testimonial-pagination flex justify-center gap-2 mt-8"></div>
+          <button className="testimonial-prev absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center text-blue-600 hover:bg-blue-50 transition-colors duration-300 hidden md:flex">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <button className="testimonial-next absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center text-blue-600 hover:bg-blue-50 transition-colors duration-300 hidden md:flex">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
         </div>
-
-        {/* Stats bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6"
-        >
-          {[
-            { value: '98%', label: 'Client Satisfaction' },
-            { value: '40%', label: 'Average Efficiency Gain' },
-            { value: '24/7', label: 'Support Availability' },
-            { value: '200+', label: 'Successful Deployments' }
-          ].map((stat, i) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.4, delay: 0.4 + i * 0.1 }}
-              className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center"
-            >
-              <div className="text-3xl font-bold text-blue-600 mb-2">{stat.value}</div>
-              <div className="text-gray-600">{stat.label}</div>
-            </motion.div>
-          ))}
-        </motion.div>
       </div>
 
       {/* Expanded Testimonial Modal */}
       <AnimatePresence>
-        {expandedTestimonial && (
+        {isExpanded && selectedTestimonial && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
-            onClick={() => setExpandedTestimonial(null)}
+            onClick={() => setIsExpanded(false)}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
@@ -222,18 +237,18 @@ const Testimonials = () => {
                 <div className="flex justify-between items-start mb-8">
                   <div className="flex items-center gap-4">
                     <div className="w-20 h-20 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-2xl">
-                      {expandedTestimonial.avatar}
+                      {selectedTestimonial.avatar}
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-gray-900">{expandedTestimonial.name}</h3>
-                      <div className="text-blue-600">{expandedTestimonial.title}</div>
+                      <h3 className="text-xl font-bold text-gray-900">{selectedTestimonial.name}</h3>
+                      <div className="text-blue-600">{selectedTestimonial.title}</div>
                       <div className="flex mt-2">
-                        {renderStars(expandedTestimonial.rating)}
+                        {renderStars(selectedTestimonial.rating)}
                       </div>
                     </div>
                   </div>
                   <button 
-                    onClick={() => setExpandedTestimonial(null)}
+                    onClick={() => setIsExpanded(false)}
                     className="text-gray-400 hover:text-gray-600 transition-colors"
                   >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -243,18 +258,13 @@ const Testimonials = () => {
                 </div>
                 
                 <blockquote className="text-gray-700 text-xl mb-8 leading-relaxed">
-                  <p>“{expandedTestimonial.quote}”</p>
+                  <p>“{selectedTestimonial.quote}”</p>
                 </blockquote>
                 
                 <div className="bg-gray-50 rounded-xl p-6">
-                  <h4 className="font-semibold text-gray-900 mb-4">The Results:</h4>
+                  <h4 className="font-semibold text-gray-900 mb-4">Key Results:</h4>
                   <ul className="space-y-3">
-                    {[
-                      "40% increase in operational efficiency",
-                      "Reduced implementation time by 35%",
-                      "99.9% system uptime",
-                      "Seamless integration with existing tools"
-                    ].map((result, i) => (
+                    {selectedTestimonial.results.map((result, i) => (
                       <li key={i} className="flex items-start">
                         <svg className="w-5 h-5 text-green-500 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
