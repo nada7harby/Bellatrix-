@@ -117,18 +117,18 @@ const Hero = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8 }}
           >
-            {/* Gradient top border - matches navbar */}
+            {/* Gradient top border - changed to blue */}
             <Box sx={{
               width: '80px',
               height: '4px',
-              background: 'linear-gradient(to right, #059669, #0d9488)',
+              background: 'linear-gradient(to right, #2563eb, #1d4ed8)', // Blue 600 to Blue 700
               mb: 3,
               borderRadius: '2px'
             }} />
 
             <Typography variant="overline" sx={{
               display: 'block',
-              color: '#059669', // Emerald 600
+              color: '#2563eb', // Blue 600
               fontSize: '0.9rem',
               fontWeight: 600,
               letterSpacing: '2px',
@@ -168,10 +168,10 @@ const Hero = () => {
                   fontSize: '1rem',
                   fontWeight: 600,
                   borderRadius: '8px',
-                  background: 'linear-gradient(to right, #059669, #0d9488)', // Emerald to teal
+                  background: 'linear-gradient(to right, #2563eb, #1d4ed8)', // Blue 600 to Blue 700
                   '&:hover': {
-                    background: 'linear-gradient(to right, #047857, #0f766e)', // Darker emerald to teal
-                    boxShadow: '0 4px 6px -1px rgba(5, 150, 105, 0.3)'
+                    background: 'linear-gradient(to right, #1e40af, #1e3a8a)', // Darker blue
+                    boxShadow: '0 4px 6px -1px rgba(37, 99, 235, 0.3)'
                   }
                 }}
               >
@@ -236,7 +236,7 @@ const Hero = () => {
                   width: index === currentSlide ? '24px' : '12px',
                   height: '12px',
                   borderRadius: '6px',
-                  bgcolor: index === currentSlide ? '#059669' : '#cbd5e1', // Emerald 600 or Gray 300
+                  bgcolor: index === currentSlide ? '#2563eb' : '#cbd5e1', // Blue 600 or Gray 300
                   cursor: 'pointer',
                   transition: 'all 0.3s ease'
                 }}
@@ -280,7 +280,7 @@ const Hero = () => {
             { value: '15+', label: 'Years' }
           ].map((stat, index) => (
             <Box key={index} sx={{ textAlign: 'center' }}>
-              <Typography variant="h5" sx={{ fontWeight: 700, color: '#059669' }}> {/* Emerald 600 */}
+              <Typography variant="h5" sx={{ fontWeight: 700, color: '#2563eb' }}> {/* Blue 600 */}
                 {stat.value}
               </Typography>
               <Typography variant="caption" sx={{ color: '#64748b' }}> {/* Gray 500 */}

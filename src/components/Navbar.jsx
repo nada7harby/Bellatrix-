@@ -43,18 +43,18 @@ const Navbar = () => {
     <nav
       className={`fixed w-full z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-white/90 backdrop-blur-sm shadow-sm border-b border-gray-100"
+          ? "bg-white/40  shadow-sm border-b border-gray-100"
           : "bg-white"
       }`}
     >
-      {/* Accent top border */}
-      <div className="h-1 bg-gradient-to-r from-emerald-500 to-teal-500"></div>
+      {/* Accent top border - changed to blue gradient */}
+      <div className="h-1 bg-gradient-to-r from-blue-500 to-indigo-500"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
-          {/* Logo */}
+          {/* Logo - changed to blue gradient */}
           <a href="/" className="flex items-center">
-            <span className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-3 py-1.5 rounded-md mr-2 text-lg font-bold">
+            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-3 py-1.5 rounded-md mr-2 text-lg font-bold">
               B
             </span>
             <span
@@ -68,20 +68,20 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-2">
-            {/* Services Dropdown */}
+            {/* Services Dropdown - changed to blue */}
             <div className="relative">
               <button
                 onClick={() => toggleDropdown("services")}
                 className={`flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${
                   openDropdown === "services"
-                    ? "text-teal-700 bg-teal-50"
+                    ? "text-blue-700 bg-blue-50"
                     : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                 }`}
               >
                 <span>Services</span>
                 <ChevronDownIcon
                   className={`ml-2 h-4 w-4 transition-transform ${
-                    openDropdown === "services" ? "rotate-180 text-teal-600" : "text-gray-400"
+                    openDropdown === "services" ? "rotate-180 text-blue-600" : "text-gray-400"
                   }`}
                 />
               </button>
@@ -97,7 +97,7 @@ const Navbar = () => {
                       <a
                         key={item}
                         href="#"
-                        className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-teal-50 hover:text-teal-700 transition-colors"
+                        className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
                       >
                         {item}
                       </a>
@@ -107,20 +107,20 @@ const Navbar = () => {
               )}
             </div>
 
-            {/* Industries Dropdown */}
+            {/* Industries Dropdown - changed to blue */}
             <div className="relative">
               <button
                 onClick={() => toggleDropdown("industries")}
                 className={`flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${
                   openDropdown === "industries"
-                    ? "text-teal-700 bg-teal-50"
+                    ? "text-blue-700 bg-blue-50"
                     : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                 }`}
               >
                 <span>Industries</span>
                 <ChevronDownIcon
                   className={`ml-2 h-4 w-4 transition-transform ${
-                    openDropdown === "industries" ? "rotate-180 text-teal-600" : "text-gray-400"
+                    openDropdown === "industries" ? "rotate-180 text-blue-600" : "text-gray-400"
                   }`}
                 />
               </button>
@@ -136,7 +136,7 @@ const Navbar = () => {
                       <a
                         key={item}
                         href="#"
-                        className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-teal-50 hover:text-teal-700 transition-colors"
+                        className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
                       >
                         {item}
                       </a>
@@ -153,9 +153,10 @@ const Navbar = () => {
               About
             </a>
 
+            {/* Contact button - changed to blue gradient */}
             <a
               href="#"
-              className="ml-2 px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-sm font-medium rounded-lg hover:shadow-md transition-all hover:from-emerald-700 hover:to-teal-700"
+              className="ml-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-medium rounded-lg hover:shadow-md transition-all hover:from-blue-700 hover:to-indigo-700"
             >
               Contact
             </a>
@@ -177,7 +178,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile menu - changed to blue */}
       {mobileMenuOpen && (
         <motion.div 
           initial={{ opacity: 0 }}
@@ -204,7 +205,7 @@ const Navbar = () => {
                     <a
                       key={item}
                       href="#"
-                      className="block px-3 py-2.5 text-sm text-gray-600 rounded-lg hover:bg-teal-50 hover:text-teal-700"
+                      className="block px-3 py-2.5 text-sm text-gray-600 rounded-lg hover:bg-blue-50 hover:text-blue-700"
                     >
                       {item}
                     </a>
@@ -232,7 +233,7 @@ const Navbar = () => {
                     <a
                       key={item}
                       href="#"
-                      className="block px-3 py-2.5 text-sm text-gray-600 rounded-lg hover:bg-teal-50 hover:text-teal-700"
+                      className="block px-3 py-2.5 text-sm text-gray-600 rounded-lg hover:bg-blue-50 hover:text-blue-700"
                     >
                       {item}
                     </a>
@@ -248,9 +249,10 @@ const Navbar = () => {
               About
             </a>
 
+            {/* Mobile Contact button - changed to blue gradient */}
             <a
               href="#"
-              className="block w-full px-4 py-3 mt-2 text-center bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-medium rounded-lg hover:from-emerald-700 hover:to-teal-700"
+              className="block w-full px-4 py-3 mt-2 text-center bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-lg hover:from-blue-700 hover:to-indigo-700"
             >
               Contact
             </a>
