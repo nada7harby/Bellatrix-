@@ -22,6 +22,7 @@ const Navbar = () => {
   const toggleDropdown = (dropdown) => {
     setOpenDropdown(openDropdown === dropdown ? null : dropdown);
   };
+  
 
   const services = [
     "NetSuite Implementation",
