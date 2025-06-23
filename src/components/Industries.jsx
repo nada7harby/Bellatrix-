@@ -1,93 +1,96 @@
 import { useState } from 'react';
 import { Card, Typography, Button, Chip } from '@mui/material';
-import { Factory, Storefront, Engineering, LocalShipping, ArrowRightAlt, CheckCircle } from '@mui/icons-material';
+import { Factory, Store, Work as Briefcase, LocalShipping as Package, ArrowRightAlt, CheckCircle } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
 
 const industries = [
-  { 
-    id: 1,
-    name: 'Manufacturing', 
-    icon: <Factory sx={{ fontSize: 40 }} />,
-    color: '#4F46E5',
-    description: 'End-to-end solutions for modern manufacturing challenges',
-    solutions: [
-      'Production planning & scheduling',
-      'Quality control management',
-      'Equipment maintenance tracking',
-      'Real-time cost analytics',
-      'Supply chain coordination'
-    ],
-    stats: '35% average efficiency improvement'
+  {
+    id: 'manufacturing',
+    label: 'Manufacturing',
+    icon: <Factory className="w-8 h-8" />,
+    content: {
+      title: 'Manufacturing Solutions',
+      description: 'Streamline your manufacturing operations with our comprehensive NetSuite solutions. From production planning to inventory management, we help you optimize every aspect of your manufacturing process.',
+      features: [
+        'Production planning and scheduling',
+        'Inventory and supply chain management',
+        'Quality control and compliance',
+        'Cost accounting and analysis',
+        'Shop floor control'
+      ],
+      image: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    }
   },
-  { 
-    id: 2,
-    name: 'Retail', 
-    icon: <Storefront sx={{ fontSize: 40 }} />,
-    color: '#10B981',
-    description: 'Omnichannel solutions for the digital retail era',
-    solutions: [
-      'Unified commerce platform',
-      'AI-driven inventory optimization',
-      'Customer behavior analytics',
-      'Seamless POS integration',
-      'Loyalty program management'
-    ],
-    stats: '28% increase in customer retention'
+  {
+    id: 'retail',
+    label: 'Retail',
+    icon: <Store className="w-8 h-8" />,
+    content: {
+      title: 'Retail Solutions',
+      description: 'Transform your retail operations with our integrated NetSuite solutions. Manage inventory, sales, and customer relationships across multiple channels seamlessly.',
+      features: [
+        'Multi-channel retail management',
+        'Inventory optimization',
+        'Customer relationship management',
+        'Point of sale integration',
+        'E-commerce integration'
+      ],
+      image: 'https://images.unsplash.com/photo-1441986300917-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    }
   },
-  { 
-    id: 3,
-    name: 'Professional Services', 
-    icon: <Engineering sx={{ fontSize: 40 }} />,
-    color: '#F59E0B',
-    description: 'Efficiency tools for service-based businesses',
-    solutions: [
-      'Automated time tracking',
-      'Project profitability analysis',
-      'Resource allocation dashboards',
-      'Client collaboration portals',
-      'Integrated billing systems'
-    ],
-    stats: '40% faster project delivery'
+  {
+    id: 'professional-services',
+    label: 'Professional Services',
+    icon: <Briefcase className="w-8 h-8" />,
+    content: {
+      title: 'Professional Services Solutions',
+      description: 'Optimize your service delivery with our NetSuite solutions for professional services firms. From project management to resource allocation, we help you deliver exceptional service.',
+      features: [
+        'Project management and tracking',
+        'Resource allocation and planning',
+        'Time and expense management',
+        'Client billing and invoicing',
+        'Service delivery automation'
+      ],
+      image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    }
   },
-  { 
-    id: 4,
-    name: 'Wholesale Distribution', 
-    icon: <LocalShipping sx={{ fontSize: 40 }} />,
-    color: '#3B82F6',
-    description: 'Next-gen distribution network optimization',
-    solutions: [
-      'Intelligent order management',
-      'Warehouse automation systems',
-      'Supplier collaboration portals',
-      'Dynamic pricing engines',
-      'Multi-channel fulfillment'
-    ],
-    stats: '45% reduction in logistics costs'
+  {
+    id: 'wholesale-distribution',
+    label: 'Wholesale Distribution',
+    icon: <Package className="w-8 h-8" />,
+    content: {
+      title: 'Wholesale Distribution Solutions',
+      description: 'Optimize your wholesale distribution operations with our NetSuite solutions. From order management to inventory control, we help you streamline your distribution processes.',
+      features: [
+        'Order management and fulfillment',
+        'Inventory and warehouse management',
+        'Supplier relationship management',
+        'Pricing and discount management',
+        'Multi-channel distribution'
+      ],
+      image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    }
   }
 ];
 
+const blueGradient = 'linear-gradient(135deg, #2563eb 0%, #60a5fa 100%)';
+const glassBg = 'rgba(255,255,255,0.7)';
+
 const Industries = () => {
-  const [selectedIndustry, setSelectedIndustry] = useState(industries[3]);
+  const [selectedIndustry, setSelectedIndustry] = useState(industries[0]);
   const [hoveredCard, setHoveredCard] = useState(null);
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
-      {/* Decorative elements */}
-      <div className="absolute inset-0 overflow-hidden opacity-10">
-        {industries.map(industry => (
-          <div 
-            key={industry.id}
-            className="absolute rounded-full blur-3xl"
-            style={{
-              backgroundColor: industry.color,
-              width: '300px',
-              height: '300px',
-              left: `${Math.random() * 80}%`,
-              top: `${Math.random() * 80}%`,
-              opacity: 0.3
-            }}
-          />
-        ))}
+    <section className="py-20 px-4 bg-gradient-to-b from-blue-50 to-white relative overflow-hidden min-h-[90vh]">
+      {/* Decorative blue gradients */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute top-[-100px] left-[-100px] w-[400px] h-[400px] rounded-full blur-3xl opacity-30" style={{background: blueGradient}} />
+        <div className="absolute bottom-[-120px] right-[-120px] w-[350px] h-[350px] rounded-full blur-2xl opacity-20" style={{background: blueGradient}} />
       </div>
 
       <div className="container mx-auto max-w-7xl relative z-10">
@@ -95,137 +98,140 @@ const Industries = () => {
           <Chip 
             label="INDUSTRY SOLUTIONS" 
             variant="outlined" 
-            className="mb-6 border-blue-200 text-blue-600 font-medium"
+            className="mb-6 border-blue-300 text-blue-700 font-semibold tracking-widest bg-white/60"
           />
           <Typography 
             variant="h3" 
-            className="text-4xl font-bold text-gray-900 mb-4"
+            className="text-4xl font-extrabold text-blue-900 mb-4"
           >
-            Transform Your Business <span className="text-blue-600">Sector-Specific</span> Solutions
+            Discover <span className="text-blue-600">Modern</span> Industry Solutions
           </Typography>
           <Typography 
             variant="body1" 
-            className="text-xl text-gray-600 max-w-3xl mx-auto"
+            className="text-xl text-blue-700 max-w-2xl mx-auto"
           >
-            Our tailored solutions address the unique challenges of each industry
+            Explore how our blue-powered platform transforms your sector with interactive, tailored solutions.
           </Typography>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
-          {/* Industry Cards */}
-          <div className="space-y-6">
-            {industries.map(industry => (
+        {/* Swiper Cards */}
+        <Swiper
+          modules={[Navigation, Autoplay]}
+          navigation={industries.length > 4}
+          autoplay={{ delay: 2500, disableOnInteraction: false }}
+          spaceBetween={32}
+          slidesPerView={1}
+          breakpoints={{
+            640: { slidesPerView: 2 },
+            1024: { slidesPerView: 4 }
+          }}
+          className="pb-4 mb-16"
+        >
+          {industries.map(industry => (
+            <SwiperSlide key={industry.id}>
               <motion.div
-                key={industry.id}
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ scale: 1.06, boxShadow: '0 8px 32px 0 rgba(37,99,235,0.15)' }}
                 whileTap={{ scale: 0.98 }}
                 onMouseEnter={() => setHoveredCard(industry.id)}
                 onMouseLeave={() => setHoveredCard(null)}
+                className="flex-shrink-0"
               >
                 <Card 
                   onClick={() => setSelectedIndustry(industry)}
-                  className={`p-6 rounded-2xl cursor-pointer transition-all border-2 ${selectedIndustry.id === industry.id ? 'border-blue-500 shadow-lg' : 'border-transparent hover:border-gray-200'} ${hoveredCard === industry.id ? 'shadow-md' : 'shadow-sm'}`}
+                  className={`w-72 h-56 p-6 rounded-3xl cursor-pointer border-2 transition-all duration-300 backdrop-blur-md ${selectedIndustry.id === industry.id ? 'border-blue-500 shadow-xl ring-2 ring-blue-400' : 'border-transparent hover:border-blue-200'} ${hoveredCard === industry.id ? 'shadow-lg' : 'shadow-md'}`}
                   style={{
-                    background: selectedIndustry.id === industry.id 
-                      ? `linear-gradient(to bottom right, white, ${industry.color}10)` 
-                      : 'white'
+                    background: glassBg,
+                    boxShadow: selectedIndustry.id === industry.id ? '0 8px 32px 0 rgba(37,99,235,0.25)' : '0 4px 16px 0 rgba(37,99,235,0.08)',
                   }}
+                  elevation={0}
                 >
-                  <div className="flex items-start gap-4">
+                  <div className="flex flex-col items-center gap-3 h-full justify-center">
                     <div 
-                      className="p-3 rounded-lg flex-shrink-0"
-                      style={{ backgroundColor: `${industry.color}20` }}
+                      className="p-4 rounded-xl mb-2 flex-shrink-0"
+                      style={{ backgroundColor: '#eff6ff' }}
                     >
                       {industry.icon}
                     </div>
-                    <div>
-                      <Typography variant="h6" className="font-bold text-gray-900">
-                        {industry.name}
-                      </Typography>
-                      <Typography variant="body2" className="text-gray-600 mt-1">
-                        {industry.description}
-                      </Typography>
-                    </div>
+                    <Typography variant="h6" className="font-bold text-blue-900 text-center">
+                      {industry.label}
+                    </Typography>
+                    <Typography variant="body2" className="text-blue-700 text-center">
+                      {industry.content.title}
+                    </Typography>
                   </div>
                 </Card>
               </motion.div>
-            ))}
-          </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
 
-          {/* Selected Industry Details */}
-          <div className="lg:col-span-2">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={selectedIndustry.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
-                className="h-full bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100"
-              >
-                <div 
-                  className="h-2 w-full"
-                  style={{ backgroundColor: selectedIndustry.color }}
-                />
-                <div className="p-8">
-                  <div className="flex justify-between items-start mb-8">
-                    <div>
-                      <Typography variant="h4" className="font-bold text-gray-900 mb-2">
-                        {selectedIndustry.name} Solutions
-                      </Typography>
-                      <Typography variant="body1" className="text-gray-600">
-                        {selectedIndustry.description}
-                      </Typography>
-                    </div>
-                    <div 
-                      className="p-4 rounded-lg"
-                      style={{ backgroundColor: `${selectedIndustry.color}20` }}
-                    >
-                      {selectedIndustry.icon}
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                    {selectedIndustry.solutions.map((solution, index) => (
-                      <motion.div
-                        key={index}
-                        whileHover={{ x: 5 }}
-                        className="flex items-start gap-3"
-                      >
-                        <CheckCircle 
-                          className="mt-0.5 flex-shrink-0" 
-                          style={{ color: selectedIndustry.color }} 
-                        />
-                        <Typography variant="body1" className="text-gray-800">
-                          {solution}
-                        </Typography>
-                      </motion.div>
-                    ))}
-                  </div>
-
-                  <div className="bg-gray-50 rounded-lg p-4 mb-8">
-                    <Typography variant="body2" className="font-medium text-gray-700">
-                      Typical results: <span className="font-bold" style={{ color: selectedIndustry.color }}>
-                        {selectedIndustry.stats}
-                      </span>
+        {/* Floating details panel */}
+        <div className="flex justify-center">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={selectedIndustry.id}
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -40 }}
+              transition={{ duration: 0.4 }}
+              className="w-full max-w-3xl bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl border border-blue-100 overflow-hidden relative"
+              style={{ boxShadow: '0 12px 48px 0 rgba(37,99,235,0.10)' }}
+            >
+              <div 
+                className="h-2 w-full"
+                style={{ background: blueGradient }}
+              />
+              <div className="p-10">
+                <div className="flex flex-col md:flex-row justify-between items-start mb-8 gap-8">
+                  <div className="flex-1">
+                    <Typography variant="h4" className="font-extrabold text-blue-900 mb-2">
+                      {selectedIndustry.content.title}
                     </Typography>
+                    <Typography variant="body1" className="text-blue-700 mb-4">
+                      {selectedIndustry.content.description}
+                    </Typography>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                      {selectedIndustry.content.features.map((feature, index) => (
+                        <motion.div
+                          key={index}
+                          whileHover={{ x: 8 }}
+                          className="flex items-start gap-3"
+                        >
+                          <CheckCircle 
+                            className="mt-0.5 flex-shrink-0" 
+                            style={{ color: '#2563eb' }} 
+                          />
+                          <Typography variant="body1" className="text-blue-900">
+                            {feature}
+                          </Typography>
+                        </motion.div>
+                      ))}
+                    </div>
                   </div>
-
-                  <Button
-                    variant="contained"
-                    endIcon={<ArrowRightAlt />}
-                    size="large"
-                    style={{ backgroundColor: selectedIndustry.color }}
-                    className="shadow-sm hover:shadow-md transition-shadow"
-                  >
-                    Explore {selectedIndustry.name} Solutions
-                  </Button>
+                  <div className="flex-shrink-0 w-full md:w-56 h-40 md:h-56 rounded-2xl overflow-hidden shadow-lg">
+                    <img src={selectedIndustry.content.image} alt={selectedIndustry.label} className="object-cover w-full h-full" />
+                  </div>
                 </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
+                <Button
+                  variant="contained"
+                  endIcon={<ArrowRightAlt />}
+                  size="large"
+                  style={{ background: blueGradient, color: 'white', boxShadow: '0 2px 8px 0 rgba(37,99,235,0.15)' }}
+                  className="shadow-md hover:shadow-xl transition-shadow font-bold text-lg px-8"
+                >
+                  Explore {selectedIndustry.label} Solutions
+                </Button>
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
+
+      {/* Hide scrollbar utility */}
+      <style>{`
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      `}</style>
     </section>
   );
 };
