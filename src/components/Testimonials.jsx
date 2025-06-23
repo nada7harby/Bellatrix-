@@ -7,55 +7,7 @@ import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
-const testimonials = [
-  {
-    id: 1,
-    quote: "Bellatrix transformed our operations. Their NetSuite expertise is unmatched.",
-    name: "John Doe",
-    title: "CEO of TechCorp",
-    avatar: "JD",
-    rating: 5,
-    results: ["40% efficiency boost", "Seamless migration", "24/7 support"]
-  },
-  {
-    id: 2,
-    quote: "The implementation was flawless. Their team delivered beyond expectations.",
-    name: "Jane Smith",
-    title: "COO of Innovate Inc.",
-    avatar: "JS",
-    rating: 5,
-    results: ["50% faster deployment", "Zero downtime", "Custom integrations"]
-  },
-  {
-    id: 3,
-    quote: "Our productivity skyrocketed by 40% after switching to Bellatrix.",
-    name: "Sam Wilson",
-    title: "CFO of Global Solutions",
-    avatar: "SW",
-    rating: 5,
-    results: ["Real-time analytics", "Cost savings", "Scalable infrastructure"]
-  },
-  {
-    id: 4,
-    quote: "Exceptional technical skills with deep business understanding.",
-    name: "Sarah Johnson",
-    title: "Director of Operations",
-    avatar: "SJ",
-    rating: 4,
-    results: ["Automated workflows", "User-friendly UI", "Training included"]
-  },
-  {
-    id: 5,
-    quote: "The best investment in our digital transformation journey.",
-    name: "Michael Brown",
-    title: "IT Manager",
-    avatar: "MB",
-    rating: 5,
-    results: ["Cloud optimization", "Security upgrades", "API integrations"]
-  }
-];
-
-const Testimonials = () => {
+const Testimonials = ({ testimonials = [], sectionHeader = {}, ctaButton = {} }) => {
   const [selectedTestimonial, setSelectedTestimonial] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const swiperRef = useRef(null);
@@ -115,11 +67,11 @@ const Testimonials = () => {
         >
           <h2 className="text-4xl font-bold text-gray-900 sm:text-5xl mb-4">
             <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-              Trusted by Industry Leaders
+              {sectionHeader?.gradientText || 'Trusted by Industry Leaders'}
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Don’t just take our word for it—here’s what our clients say.
+            {sectionHeader?.subtitle || "Don't just take our word for it—here's what our clients say."}
           </p>
         </motion.div>
 
@@ -278,7 +230,7 @@ const Testimonials = () => {
               
               <div className="border-t border-gray-100 p-6 bg-gray-50">
                 <button className="w-full py-3 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-lg hover:shadow-md transition-all duration-300 flex items-center justify-center">
-                  Contact This Client's Success Manager
+                  {ctaButton?.text || "Contact This Client's Success Manager"}
                   <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>

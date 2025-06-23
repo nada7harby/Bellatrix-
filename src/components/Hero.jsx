@@ -3,34 +3,10 @@ import { Button, Typography, Box, IconButton } from '@mui/material';
 import { PlayCircle, ArrowRight, ChevronLeft, ChevronRight } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const Hero = () => {
+const Hero = ({ slides = [], stats = [] }) => {
   const videoRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
-
-  const slides = [
-    {
-      title: "Strategic Business Transformation",
-      subtitle: "Oracle NetSuite Consultancy",
-      description: "Streamline operations and drive growth with our comprehensive NetSuite solutions.",
-      video: "/video1.mp4",
-      cta: "Explore Services"
-    },
-    {
-      title: "Digital Optimization Experts",
-      subtitle: "Cloud Solutions Specialists",
-      description: "Enhance productivity with our tailored implementation and consulting services.",
-      video: "/video2.mp4",
-      cta: "View Case Studies"
-    },
-    {
-      title: "Data-Driven Decision Making",
-      subtitle: "Business Intelligence Partners",
-      description: "Leverage real-time analytics to transform your operations.",
-      video: "/video3.mp4",
-      cta: "Request Consultation"
-    }
-  ];
 
   // Handle video play/pause
   useEffect(() => {
@@ -39,13 +15,15 @@ const Hero = () => {
     }
   }, [isPlaying, currentSlide]);
 
-  // Auto-advance slides
+  // Auto-advance slides if slides exist
   useEffect(() => {
+    if (slides.length === 0) return;
+    
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 8000);
     return () => clearInterval(interval);
-  }, []);
+  }, [slides]);
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -56,6 +34,24 @@ const Hero = () => {
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
     setIsPlaying(true);
   };
+
+  // Return early if no slides
+  if (slides.length === 0) {
+    return (
+      <Box sx={{
+        position: 'relative',
+        height: '100vh',
+        minHeight: '800px',
+        overflow: 'hidden',
+        backgroundColor: '#f8fafc',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+        <Typography variant="h6">No hero content available</Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box sx={{
@@ -260,38 +256,42 @@ const Hero = () => {
         </Box>
 
         {/* Stats */}
-        <Box sx={{
-          position: 'absolute',
-          bottom: '5%',
-          right: { xs: '50%', md: '5%' },
-          transform: { xs: 'translateX(50%)', md: 'none' },
-          display: 'flex',
-          gap: 4,
-          bgcolor: 'white',
-          px: 4,
-          py: 2,
-          borderRadius: '12px',
-          boxShadow: 3,
-          border: '1px solid #e2e8f0' // Gray 200
-        }}>
-          {[
-            { value: '200+', label: 'Projects' },
-            { value: '98%', label: 'Satisfaction' },
-            { value: '15+', label: 'Years' }
-          ].map((stat, index) => (
-            <Box key={index} sx={{ textAlign: 'center' }}>
-              <Typography variant="h5" sx={{ fontWeight: 700, color: '#2563eb' }}> {/* Blue 600 */}
-                {stat.value}
-              </Typography>
-              <Typography variant="caption" sx={{ color: '#64748b' }}> {/* Gray 500 */}
-                {stat.label}
-              </Typography>
-            </Box>
-          ))}
-        </Box>
+        {stats.length > 0 && (
+          <Box sx={{
+            position: 'absolute',
+            bottom: '5%',
+            right: { xs: '50%', md: '5%' },
+            transform: { xs: 'translateX(50%)', md: 'none' },
+            display: 'flex',
+            gap: 4,
+            bgcolor: 'white',
+            px: 4,
+            py: 2,
+            borderRadius: '12px',
+            boxShadow: 3,
+            border: '1px solid #e2e8f0' // Gray 200
+          }}>
+            {stats.map((stat, index) => (
+              <Box key={index} sx={{ textAlign: 'center' }}>
+                <Typography variant="h5" sx={{ fontWeight: 700, color: '#2563eb' }}> {/* Blue 600 */}
+                  {stat.value}
+                </Typography>
+                <Typography variant="caption" sx={{ color: '#64748b' }}> {/* Gray 500 */}
+                  {stat.label}
+                </Typography>
+              </Box>
+            ))}
+          </Box>
+        )}
       </Box>
     </Box>
   );
+};
+
+// Default props in case none are passed
+Hero.defaultProps = {
+  slides: [],
+  stats: []
 };
 
 export default Hero;

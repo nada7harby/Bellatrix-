@@ -10,7 +10,16 @@ import {
 } from "@mui/icons-material";
 import { motion, AnimatePresence } from "framer-motion";
 
-const Services = () => {
+// Icon mapping for dynamic icon rendering
+const iconMap = {
+  LightbulbOutlined: <LightbulbOutlined fontSize="large" />,
+  BuildOutlined: <BuildOutlined fontSize="large" />,
+  SchoolOutlined: <SchoolOutlined fontSize="large" />,
+  SettingsOutlined: <SettingsOutlined fontSize="large" />,
+  LinkOutlined: <LinkOutlined fontSize="large" />,
+};
+
+const Services = ({ services = [], sectionHeader = {}, viewAllButton = {} }) => {
   const [selectedService, setSelectedService] = useState(null);
   const [hoveredService, setHoveredService] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -21,76 +30,6 @@ const Services = () => {
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
-
-  const services = [
-    {
-      title: "Strategic Consultation",
-      description:
-        "Expert analysis to optimize your NetSuite roadmap with actionable insights",
-      icon: <LightbulbOutlined fontSize="large" />,
-      color: "#10B981",
-      details: [
-        "Business process analysis",
-        "ROI forecasting",
-        "System architecture planning",
-        "Change management strategy",
-      ],
-      stats: "92% client satisfaction rate",
-    },
-    {
-      title: "Flawless Implementation",
-      description:
-        "End-to-end deployment with minimal disruption to operations",
-      icon: <BuildOutlined fontSize="large" />,
-      color: "#0EA5E9",
-      details: [
-        "Phased rollout planning",
-        "Data migration services",
-        "Configuration best practices",
-        "Go-live support",
-      ],
-      stats: "40% faster than industry average",
-    },
-    {
-      title: "Adaptive Training",
-      description: "Customized learning paths for all user levels and roles",
-      icon: <SchoolOutlined fontSize="large" />,
-      color: "#8B5CF6",
-      details: [
-        "Role-based training programs",
-        "Interactive e-learning modules",
-        "Custom documentation",
-        "Ongoing certification",
-      ],
-      stats: "85% faster user adoption",
-    },
-    {
-      title: "Tailored Customization",
-      description: "Bespoke solutions addressing your unique business needs",
-      icon: <SettingsOutlined fontSize="large" />,
-      color: "#EC4899",
-      details: [
-        "Workflow automation",
-        "Custom dashboards",
-        "Advanced reporting",
-        "Third-party integrations",
-      ],
-      stats: "300+ custom solutions delivered",
-    },
-    {
-      title: "Seamless Integration",
-      description: "Unified ecosystem connecting NetSuite with your tech stack",
-      icon: <LinkOutlined fontSize="large" />,
-      color: "#F59E0B",
-      details: [
-        "API development",
-        "Middleware configuration",
-        "Data synchronization",
-        "Real-time analytics",
-      ],
-      stats: "99.9% integration uptime",
-    },
-  ];
 
   return (
     <section className="relative py-20 overflow-hidden bg-gradient-to-b from-gray-50 to-white">
@@ -130,13 +69,30 @@ const Services = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Our{" "}
-            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-              Professional Services
-            </span>
+            {sectionHeader?.title ? (
+              <>
+                {sectionHeader.title.split(sectionHeader.gradientText || "").map((part, i, arr) => (
+                  <span key={i}>
+                    {part}
+                    {i < arr.length - 1 && sectionHeader.gradientText && (
+                      <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                        {sectionHeader.gradientText}
+                      </span>
+                    )}
+                  </span>
+                ))}
+              </>
+            ) : (
+              <>
+                Our {" "}
+                <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                  Professional Services
+                </span>
+              </>
+            )}
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Comprehensive solutions tailored to your business needs
+            {sectionHeader?.subtitle || "Comprehensive solutions tailored to your business needs"}
           </p>
         </motion.div>
 
@@ -181,7 +137,7 @@ const Services = () => {
                       color: service.color,
                     }}
                   >
-                    {service.icon}
+                    {iconMap[service.icon] || null}
                   </div>
 
                   {selectedService === index && isMobile && (
@@ -280,7 +236,7 @@ const Services = () => {
           className="mt-16 text-center"
         >
           <button className="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-xl hover:shadow-lg transition-all duration-300 hover:from-blue-700 hover:to-indigo-700 relative overflow-hidden group">
-            <span className="relative z-10">View All Services</span>
+            <span className="relative z-10">{viewAllButton?.text || 'View All Services'}</span>
             <span className="absolute inset-0 bg-gradient-to-r from-blue-700 to-indigo-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
           </button>
         </motion.div>
@@ -311,7 +267,7 @@ const Services = () => {
                     color: services[selectedService].color,
                   }}
                 >
-                  {services[selectedService].icon}
+                  {iconMap[services[selectedService].icon] || null}
                 </div>
                 <button
                   onClick={() => setSelectedService(null)}
