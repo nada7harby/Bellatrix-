@@ -89,7 +89,7 @@ const Hero = ({ slides = [], stats = [] }) => {
         left: 0,
         width: '100%',
         height: '100%',
-        background: 'linear-gradient(to right, rgba(248, 250, 252, 0.2) 0%, rgba(248, 250, 252, 0.2) 100%)',
+        background: 'linear-gradient(to right, rgba(248, 250, 252, 0.05) 0%, rgba(248, 250, 252, 0.05) 100%)',
         zIndex: 1
       }} />
 
