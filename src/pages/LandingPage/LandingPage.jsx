@@ -16,7 +16,7 @@ function LandingPage() {
       <Services />
       <Testimonials></Testimonials>
       <Industries/>
-     
+     <Footer></Footer>
     </div>
   );
 }

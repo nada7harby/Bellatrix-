@@ -108,7 +108,7 @@ const Industries = () => {
           </Typography>
           <Typography 
             variant="body1" 
-            className="text-xl text-blue-700 max-w-2xl mx-auto"
+            className="text-xl text-blue-700 max-w-4xl mx-auto"
           >
             Explore how our blue-powered platform transforms your sector with interactive, tailored solutions.
           </Typography>
