@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
-import { Bars3Icon, XMarkIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  XMarkIcon,
+  ChevronDownIcon,
+} from "@heroicons/react/24/outline";
 import { motion } from "framer-motion";
 
-const Navbar = () => {
+const Navbar = ({ services = [], industries = [] }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
   const [scrolled, setScrolled] = useState(false);
@@ -22,23 +26,17 @@ const Navbar = () => {
   const toggleDropdown = (dropdown) => {
     setOpenDropdown(openDropdown === dropdown ? null : dropdown);
   };
-  
 
-  const services = [
-    "NetSuite Implementation",
-    "Custom Development",
-    "System Integration",
-    "Cloud Migration",
-    "Data Analytics",
-  ];
+  // استبدال المصفوفة الثابتة بالبيانات من homeData.json
+  // const services = homeData.services.services.map(service => service.title);
 
-  const industries = [
-    "Manufacturing",
-    "Retail",
-    "Professional Services",
-    "Healthcare",
-    "Education",
-  ];
+  // const industries = [
+  //   "Manufacturing",
+  //   "Retail",
+  //   "Professional Services",
+  //   "Healthcare",
+  //   "Education",
+  // ];
 
   return (
     <nav
@@ -82,7 +80,9 @@ const Navbar = () => {
                 <span>Services</span>
                 <ChevronDownIcon
                   className={`ml-2 h-4 w-4 transition-transform ${
-                    openDropdown === "services" ? "rotate-180 text-blue-600" : "text-gray-400"
+                    openDropdown === "services"
+                      ? "rotate-180 text-blue-600"
+                      : "text-gray-400"
                   }`}
                 />
               </button>
@@ -94,13 +94,13 @@ const Navbar = () => {
                   className="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-100 z-50"
                 >
                   <div className="py-1.5">
-                    {services.map((item) => (
+                    {services.map((service) => (
                       <a
-                        key={item}
+                        key={service.title}
                         href="#"
                         className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
                       >
-                        {item}
+                        {service.title}
                       </a>
                     ))}
                   </div>
@@ -121,7 +121,9 @@ const Navbar = () => {
                 <span>Industries</span>
                 <ChevronDownIcon
                   className={`ml-2 h-4 w-4 transition-transform ${
-                    openDropdown === "industries" ? "rotate-180 text-blue-600" : "text-gray-400"
+                    openDropdown === "industries"
+                      ? "rotate-180 text-blue-600"
+                      : "text-gray-400"
                   }`}
                 />
               </button>
@@ -135,11 +137,11 @@ const Navbar = () => {
                   <div className="py-1.5">
                     {industries.map((item) => (
                       <a
-                        key={item}
+                        key={item.label}
                         href="#"
                         className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
                       >
-                        {item}
+                        {item.label}
                       </a>
                     ))}
                   </div>
@@ -181,7 +183,7 @@ const Navbar = () => {
 
       {/* Mobile menu - changed to blue */}
       {mobileMenuOpen && (
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="md:hidden bg-white shadow-lg"

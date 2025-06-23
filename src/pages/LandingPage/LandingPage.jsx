@@ -56,7 +56,7 @@ function LandingPage() {
 
   return (
     <div className="bg-gray-900 text-white">
-      <Navbar />
+      <Navbar   services={data.services.services}  industries={data.industries.industries} />
       
       {/* Hero Section */}
       {data?.hero && (
@@ -93,7 +93,7 @@ function LandingPage() {
         />
       )}
       
-      <Footer />
+      <Footer  />
     </div>
   );
 }
