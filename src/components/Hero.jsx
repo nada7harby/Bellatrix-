@@ -3,10 +3,34 @@ import { Button, Typography, Box, IconButton } from '@mui/material';
 import { PlayCircle, ArrowRight, ChevronLeft, ChevronRight } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const Hero = ({ slides = [], stats = [] }) => {
+const Hero = () => {
   const videoRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
+
+  const slides = [
+    {
+      title: "Strategic Business Transformation",
+      subtitle: "Oracle NetSuite Consultancy",
+      description: "Streamline operations and drive growth with our comprehensive NetSuite solutions.",
+      video: "/video1.mp4",
+      cta: "Explore Services"
+    },
+    {
+      title: "Digital Optimization Experts",
+      subtitle: "Cloud Solutions Specialists",
+      description: "Enhance productivity with our tailored implementation and consulting services.",
+      video: "https://assets.mixkit.co/videos/preview/mixkit-team-meeting-in-a-modern-office-space-12346-large.mp4",
+      cta: "View Case Studies"
+    },
+    {
+      title: "Data-Driven Decision Making",
+      subtitle: "Business Intelligence Partners",
+      description: "Leverage real-time analytics to transform your operations.",
+      video: "https://assets.mixkit.co/videos/preview/mixkit-woman-analyzing-data-on-her-laptop-12347-large.mp4",
+      cta: "Request Consultation"
+    }
+  ];
 
   // Handle video play/pause
   useEffect(() => {
@@ -15,15 +39,13 @@ const Hero = ({ slides = [], stats = [] }) => {
     }
   }, [isPlaying, currentSlide]);
 
-  // Auto-advance slides if slides exist
+  // Auto-advance slides
   useEffect(() => {
-    if (slides.length === 0) return;
-    
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 8000);
     return () => clearInterval(interval);
-  }, [slides]);
+  }, []);
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -35,31 +57,13 @@ const Hero = ({ slides = [], stats = [] }) => {
     setIsPlaying(true);
   };
 
-  // Return early if no slides
-  if (slides.length === 0) {
-    return (
-      <Box sx={{
-        position: 'relative',
-        height: '100vh',
-        minHeight: '800px',
-        overflow: 'hidden',
-        backgroundColor: '#f8fafc',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-        <Typography variant="h6">No hero content available</Typography>
-      </Box>
-    );
-  }
-
   return (
     <Box sx={{
       position: 'relative',
       height: '100vh',
       minHeight: '800px',
       overflow: 'hidden',
-      backgroundColor: '#f8fafc', // Light gray background fallback
+      bgcolor: 'background.default',
     }}>
       {/* Video Background */}
       <Box
@@ -113,18 +117,9 @@ const Hero = ({ slides = [], stats = [] }) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8 }}
           >
-            {/* Gradient top border - changed to blue */}
-            <Box sx={{
-              width: '80px',
-              height: '4px',
-              background: 'linear-gradient(to right, #2563eb, #1d4ed8)', // Blue 600 to Blue 700
-              mb: 3,
-              borderRadius: '2px'
-            }} />
-
             <Typography variant="overline" sx={{
               display: 'block',
-              color: '#2563eb', // Blue 600
+              color: 'primary.main',
               fontSize: '0.9rem',
               fontWeight: 600,
               letterSpacing: '2px',
@@ -138,7 +133,7 @@ const Hero = ({ slides = [], stats = [] }) => {
               fontWeight: 800,
               lineHeight: 1.2,
               mb: 3,
-              color: '#1e293b', // Gray 800
+              color: 'text.primary',
               maxWidth: '800px'
             }}>
               {slides[currentSlide].title}
@@ -146,7 +141,7 @@ const Hero = ({ slides = [], stats = [] }) => {
 
             <Typography variant="body1" sx={{
               fontSize: '1.2rem',
-              color: '#475569', // Gray 600
+              color: 'text.secondary',
               maxWidth: '600px',
               mb: 4
             }}>
@@ -164,11 +159,7 @@ const Hero = ({ slides = [], stats = [] }) => {
                   fontSize: '1rem',
                   fontWeight: 600,
                   borderRadius: '8px',
-                  background: 'linear-gradient(to right, #2563eb, #1d4ed8)', // Blue 600 to Blue 700
-                  '&:hover': {
-                    background: 'linear-gradient(to right, #1e40af, #1e3a8a)', // Darker blue
-                    boxShadow: '0 4px 6px -1px rgba(37, 99, 235, 0.3)'
-                  }
+                  boxShadow: 2
                 }}
               >
                 {slides[currentSlide].cta}
@@ -184,11 +175,9 @@ const Hero = ({ slides = [], stats = [] }) => {
                   fontSize: '1rem',
                   fontWeight: 500,
                   borderRadius: '8px',
-                  borderColor: '#94a3b8', // Gray 400
-                  color: '#334155', // Gray 700
+                  borderWidth: '2px',
                   '&:hover': {
-                    borderColor: '#64748b', // Gray 500
-                    backgroundColor: 'rgba(241, 245, 249, 0.5)' // Gray 50 with opacity
+                    borderWidth: '2px'
                   }
                 }}
                 onClick={() => setIsPlaying(!isPlaying)}
@@ -212,15 +201,14 @@ const Hero = ({ slides = [], stats = [] }) => {
           <IconButton
             onClick={prevSlide}
             sx={{
-              bgcolor: 'white',
+              bgcolor: 'background.paper',
               boxShadow: 1,
-              border: '1px solid #e2e8f0', // Gray 200
               '&:hover': {
-                bgcolor: '#f1f5f9' // Gray 50
+                bgcolor: 'action.hover'
               }
             }}
           >
-            <ChevronLeft sx={{ color: '#334155' }} /> {/* Gray 700 */}
+            <ChevronLeft />
           </IconButton>
 
           <Box sx={{ display: 'flex', gap: 1 }}>
@@ -232,7 +220,7 @@ const Hero = ({ slides = [], stats = [] }) => {
                   width: index === currentSlide ? '24px' : '12px',
                   height: '12px',
                   borderRadius: '6px',
-                  bgcolor: index === currentSlide ? '#2563eb' : '#cbd5e1', // Blue 600 or Gray 300
+                  bgcolor: index === currentSlide ? 'primary.main' : 'action.disabled',
                   cursor: 'pointer',
                   transition: 'all 0.3s ease'
                 }}
@@ -243,55 +231,49 @@ const Hero = ({ slides = [], stats = [] }) => {
           <IconButton
             onClick={nextSlide}
             sx={{
-              bgcolor: 'white',
+              bgcolor: 'background.paper',
               boxShadow: 1,
-              border: '1px solid #e2e8f0', // Gray 200
               '&:hover': {
-                bgcolor: '#f1f5f9' // Gray 50
+                bgcolor: 'action.hover'
               }
             }}
           >
-            <ChevronRight sx={{ color: '#334155' }} /> {/* Gray 700 */}
+            <ChevronRight />
           </IconButton>
         </Box>
 
         {/* Stats */}
-        {stats.length > 0 && (
-          <Box sx={{
-            position: 'absolute',
-            bottom: '5%',
-            right: { xs: '50%', md: '5%' },
-            transform: { xs: 'translateX(50%)', md: 'none' },
-            display: 'flex',
-            gap: 4,
-            bgcolor: 'white',
-            px: 4,
-            py: 2,
-            borderRadius: '12px',
-            boxShadow: 3,
-            border: '1px solid #e2e8f0' // Gray 200
-          }}>
-            {stats.map((stat, index) => (
-              <Box key={index} sx={{ textAlign: 'center' }}>
-                <Typography variant="h5" sx={{ fontWeight: 700, color: '#2563eb' }}> {/* Blue 600 */}
-                  {stat.value}
-                </Typography>
-                <Typography variant="caption" sx={{ color: '#64748b' }}> {/* Gray 500 */}
-                  {stat.label}
-                </Typography>
-              </Box>
-            ))}
-          </Box>
-        )}
+        <Box sx={{
+          position: 'absolute',
+          bottom: '5%',
+          right: { xs: '50%', md: '5%' },
+          transform: { xs: 'translateX(50%)', md: 'none' },
+          display: 'flex',
+          gap: 4,
+          bgcolor: 'background.paper',
+          px: 4,
+          py: 2,
+          borderRadius: '12px',
+          boxShadow: 3
+        }}>
+          {[
+            { value: '200+', label: 'Projects' },
+            { value: '98%', label: 'Satisfaction' },
+            { value: '15+', label: 'Years' }
+          ].map((stat, index) => (
+            <Box key={index} sx={{ textAlign: 'center' }}>
+              <Typography variant="h5" sx={{ fontWeight: 700, color: 'primary.main' }}>
+                {stat.value}
+              </Typography>
+              <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                {stat.label}
+              </Typography>
+            </Box>
+          ))}
+        </Box>
       </Box>
     </Box>
   );
-};
-
-// Default props in case none are passed
-Hero.defaultProps = {
-  slides: [],
-  stats: []
 };
 
 export default Hero;
