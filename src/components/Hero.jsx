@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Button, Typography, Box, IconButton } from '@mui/material';
 import { PlayCircle, ArrowRight, ChevronLeft, ChevronRight } from '@mui/icons-material';
-import { AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Hero = () => {
   const videoRef = useRef(null);
@@ -57,31 +57,13 @@ const Hero = () => {
     setIsPlaying(true);
   };
 
-  // Return early if no slides
-  if (slides.length === 0) {
-    return (
-      <Box sx={{
-        position: 'relative',
-        height: '100vh',
-        minHeight: '800px',
-        overflow: 'hidden',
-        backgroundColor: '#f8fafc',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-        <Typography variant="h6">No hero content available</Typography>
-      </Box>
-    );
-  }
-
   return (
     <Box sx={{
       position: 'relative',
       height: '100vh',
       minHeight: '800px',
       overflow: 'hidden',
-      backgroundColor: '#f8fafc', // Light gray background fallback
+      bgcolor: 'background.default',
     }}>
       {/* Video Background */}
       <Box
@@ -111,7 +93,7 @@ const Hero = () => {
         left: 0,
         width: '100%',
         height: '100%',
-        background: 'linear-gradient(to right, rgba(239, 246, 255, 0.05) 0%, rgba(239, 246, 255, 0.05) 100%)',
+        background: 'linear-gradient(to right, rgba(248, 250, 252, 0.05) 0%, rgba(248, 250, 252, 0.05) 100%)',
         zIndex: 1
       }} />
 
@@ -128,7 +110,13 @@ const Hero = () => {
         margin: '0 auto'
       }}>
         <AnimatePresence mode='wait'>
-          <div key={currentSlide}>
+          <motion.div
+            key={currentSlide}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8 }}
+          >
             <Typography variant="overline" sx={{
               display: 'block',
               color: 'primary.main',
@@ -145,7 +133,7 @@ const Hero = () => {
               fontWeight: 800,
               lineHeight: 1.2,
               mb: 3,
-              color: '#1e293b', // Gray 800
+              color: 'text.primary',
               maxWidth: '800px'
             }}>
               {slides[currentSlide].title}
@@ -153,7 +141,7 @@ const Hero = () => {
 
             <Typography variant="body1" sx={{
               fontSize: '1.2rem',
-              color: '#475569', // Gray 600
+              color: 'text.secondary',
               maxWidth: '600px',
               mb: 4
             }}>
@@ -187,11 +175,9 @@ const Hero = () => {
                   fontSize: '1rem',
                   fontWeight: 500,
                   borderRadius: '8px',
-                  borderColor: '#94a3b8', // Gray 400
-                  color: '#334155', // Gray 700
+                  borderWidth: '2px',
                   '&:hover': {
-                    borderColor: '#64748b', // Gray 500
-                    backgroundColor: 'rgba(241, 245, 249, 0.5)' // Gray 50 with opacity
+                    borderWidth: '2px'
                   }
                 }}
                 onClick={() => setIsPlaying(!isPlaying)}
@@ -199,7 +185,7 @@ const Hero = () => {
                 {isPlaying ? 'Pause Video' : 'Play Video'}
               </Button>
             </Box>
-          </div>
+          </motion.div>
         </AnimatePresence>
 
         {/* Slider Controls */}
@@ -217,13 +203,12 @@ const Hero = () => {
             sx={{
               bgcolor: 'background.paper',
               boxShadow: 1,
-              border: '1px solid #e2e8f0', // Gray 200
               '&:hover': {
-                bgcolor: '#f1f5f9' // Gray 50
+                bgcolor: 'action.hover'
               }
             }}
           >
-            <ChevronLeft sx={{ color: '#334155' }} /> {/* Gray 700 */}
+            <ChevronLeft />
           </IconButton>
 
           <Box sx={{ display: 'flex', gap: 1 }}>
@@ -235,7 +220,7 @@ const Hero = () => {
                   width: index === currentSlide ? '24px' : '12px',
                   height: '12px',
                   borderRadius: '6px',
-                  bgcolor: index === currentSlide ? '#2563eb' : '#cbd5e1', // Blue 600 or Gray 300
+                  bgcolor: index === currentSlide ? 'primary.main' : 'action.disabled',
                   cursor: 'pointer',
                   transition: 'all 0.3s ease'
                 }}
@@ -248,17 +233,44 @@ const Hero = () => {
             sx={{
               bgcolor: 'background.paper',
               boxShadow: 1,
-              border: '1px solid #e2e8f0', // Gray 200
               '&:hover': {
-                bgcolor: '#f1f5f9' // Gray 50
+                bgcolor: 'action.hover'
               }
             }}
           >
-            <ChevronRight sx={{ color: '#334155' }} /> {/* Gray 700 */}
+            <ChevronRight />
           </IconButton>
         </Box>
 
-
+        {/* Stats */}
+        <Box sx={{
+          position: 'absolute',
+          bottom: '5%',
+          right: { xs: '50%', md: '5%' },
+          transform: { xs: 'translateX(50%)', md: 'none' },
+          display: 'flex',
+          gap: 4,
+          bgcolor: 'background.paper',
+          px: 4,
+          py: 2,
+          borderRadius: '12px',
+          boxShadow: 3
+        }}>
+          {[
+            { value: '200+', label: 'Projects' },
+            { value: '98%', label: 'Satisfaction' },
+            { value: '15+', label: 'Years' }
+          ].map((stat, index) => (
+            <Box key={index} sx={{ textAlign: 'center' }}>
+              <Typography variant="h5" sx={{ fontWeight: 700, color: 'primary.main' }}>
+                {stat.value}
+              </Typography>
+              <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                {stat.label}
+              </Typography>
+            </Box>
+          ))}
+        </Box>
       </Box>
     </Box>
   );
