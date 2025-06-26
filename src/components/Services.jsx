@@ -6,9 +6,7 @@ import {
   SettingsOutlined,
   LinkOutlined,
   ArrowRightAlt,
-  Close,
 } from "@mui/icons-material";
-import { motion, AnimatePresence } from "framer-motion";
 
 // Icon mapping for dynamic icon rendering
 const iconMap = {
@@ -19,10 +17,18 @@ const iconMap = {
   LinkOutlined: <LinkOutlined fontSize="large" />,
 };
 
+// Blue color variants for different services
+const blueColors = [
+  '#2563eb', // Blue 600
+  '#1d4ed8', // Blue 700
+  '#1e40af', // Blue 800
+  '#3b82f6', // Blue 500
+  '#60a5fa', // Blue 400
+];
+
 const Services = ({ services = [], sectionHeader = {}, viewAllButton = {} }) => {
-  const [selectedService, setSelectedService] = useState(null);
-  const [hoveredService, setHoveredService] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [showAllServices, setShowAllServices] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -31,44 +37,20 @@ const Services = ({ services = [], sectionHeader = {}, viewAllButton = {} }) => 
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  return (
-    <section className="relative py-20 overflow-hidden bg-gradient-to-b from-gray-50 to-white">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden opacity-10">
-        {services.map((service, index) => (
-          <motion.div
-            key={index}
-            className="absolute rounded-full blur-3xl"
-            style={{
-              backgroundColor: service.color,
-              width: "400px",
-              height: "400px",
-              left: `${15 + index * 15}%`,
-              top: `${Math.random() * 60}%`,
-              opacity: 0.15,
-            }}
-            animate={{
-              y: [0, 30, 0],
-              transition: {
-                duration: 10 + index * 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              },
-            }}
-          />
-        ))}
-      </div>
+  // Get blue color for service based on index
+  const getServiceColor = (index) => {
+    return blueColors[index % blueColors.length];
+  };
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  // Show only first 3 services initially, or all if showAllServices is true
+  const displayedServices = showAllServices ? services : services.slice(0, 3);
+
+  return (
+    <section className="py-20 bg-gradient-to-b from-blue-50 to-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-blue-900 mb-4">
             {sectionHeader?.title ? (
               <>
                 {sectionHeader.title.split(sectionHeader.gradientText || "").map((part, i, arr) => (
@@ -91,237 +73,76 @@ const Services = ({ services = [], sectionHeader = {}, viewAllButton = {} }) => 
               </>
             )}
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-blue-700 max-w-3xl mx-auto">
             {sectionHeader?.subtitle || "Comprehensive solutions tailored to your business needs"}
           </p>
-        </motion.div>
+        </div>
 
         {/* Services grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
-          {services.map((service, index) => (
-            <motion.div
-              key={service.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-              whileHover={!isMobile ? { y: -10 } : {}}
-              onHoverStart={() => !isMobile && setHoveredService(index)}
-              onHoverEnd={() => !isMobile && setHoveredService(null)}
-              onClick={() =>
-                isMobile &&
-                setSelectedService(selectedService === index ? null : index)
-              }
-              className="cursor-pointer"
-            >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {displayedServices.map((service, index) => {
+            const serviceColor = getServiceColor(index);
+            return (
               <div
-                className={`h-full p-8 rounded-2xl transition-all duration-300 ${
-                  hoveredService === index ? "shadow-xl" : "shadow-md"
-                } ${selectedService === index ? "ring-2 ring-offset-2" : ""}`}
+                key={service.title}
+                className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow duration-300 border border-blue-100"
                 style={{
-                  backgroundColor: "white",
-                  borderTop: `4px solid ${service.color}`,
-                  transform:
-                    hoveredService === index ? "translateY(-10px)" : "",
-                  boxShadow:
-                    hoveredService === index
-                      ? `0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px ${service.color}20`
-                      : "",
+                  borderTop: `4px solid ${serviceColor}`,
                 }}
               >
-                <div className="flex items-start justify-between">
-                  <div
-                    className={`w-16 h-16 rounded-xl mb-6 flex items-center justify-center`}
+                {/* Icon */}
+                <div
+                  className="w-12 h-12 rounded-lg mb-4 flex items-center justify-center"
                     style={{
-                      backgroundColor: `${service.color}20`,
-                      color: service.color,
+                    backgroundColor: `${serviceColor}20`,
+                    color: serviceColor,
                     }}
                   >
                     {iconMap[service.icon] || null}
                   </div>
 
-                  {selectedService === index && isMobile && (
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setSelectedService(null);
-                      }}
-                      className="text-gray-400 hover:text-gray-600"
-                    >
-                      <Close />
-                    </button>
-                  )}
-                </div>
-
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                {/* Title */}
+                <h3 className="text-xl font-bold text-blue-900 mb-3">
                   {service.title}
                 </h3>
-                <p className="text-gray-600 mb-6">{service.description}</p>
 
-                {(selectedService === index || !isMobile) && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{
-                      height:
-                        selectedService === index || hoveredService === index
-                          ? "auto"
-                          : 0,
-                      opacity:
-                        selectedService === index || hoveredService === index
-                          ? 1
-                          : 0,
-                    }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden"
-                  >
-                    <ul className="space-y-2 mb-6">
-                      {service.details.map((detail, i) => (
-                        <motion.li
-                          key={i}
-                          initial={{ x: -10, opacity: 0 }}
-                          animate={{
-                            x:
-                              selectedService === index ||
-                              hoveredService === index
-                                ? 0
-                                : -10,
-                            opacity:
-                              selectedService === index ||
-                              hoveredService === index
-                                ? 1
-                                : 0,
-                          }}
-                          transition={{ delay: i * 0.05 + 0.2 }}
-                          className="flex items-start"
-                        >
-                          <span
-                            className="w-1.5 h-1.5 rounded-full mt-2.5 mr-2 flex-shrink-0"
-                            style={{ backgroundColor: service.color }}
-                          />
-                          <span className="text-gray-700">{detail}</span>
-                        </motion.li>
-                      ))}
-                    </ul>
+                {/* Description */}
+                <p className="text-blue-700 mb-4">
+                  {service.description}
+                </p>
 
-                    <div className="text-sm font-medium text-gray-500 mb-4">
+                {/* Stats */}
+                <div className="text-sm font-medium text-blue-600 mb-4 p-3 bg-blue-50 rounded-lg">
                       {service.stats}
                     </div>
-                  </motion.div>
-                )}
 
+                {/* Learn more button */}
                 <button
-                  className={`flex items-center font-medium mt-4 ${
-                    selectedService === index
-                      ? "text-gray-700"
-                      : "text-gray-500"
-                  } hover:text-gray-900 transition-colors`}
+                  className="flex items-center font-medium text-blue-600 hover:text-blue-800 transition-colors"
                   style={{
-                    color: selectedService === index ? service.color : "",
+                    color: serviceColor,
                   }}
                 >
                   Learn more{" "}
-                  <ArrowRightAlt className="ml-1 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRightAlt className="ml-1" />
                 </button>
               </div>
-            </motion.div>
-          ))}
+            );
+          })}
         </div>
 
-        {/* View all button */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-16 text-center"
-        >
-          <button className="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-xl hover:shadow-lg transition-all duration-300 hover:from-blue-700 hover:to-indigo-700 relative overflow-hidden group">
-            <span className="relative z-10">{viewAllButton?.text || 'View All Services'}</span>
-            <span className="absolute inset-0 bg-gradient-to-r from-blue-700 to-indigo-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-          </button>
-        </motion.div>
-      </div>
-
-      {/* Mobile detail overlay */}
-      <AnimatePresence>
-        {selectedService !== null && isMobile && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
-            onClick={() => setSelectedService(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white rounded-2xl p-8 max-w-md w-full max-h-[90vh] overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
+        {/* View all button - only show if there are more than 3 services */}
+        {services.length > 3 && (
+          <div className="mt-16 text-center">
+            <button 
+              className="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-xl hover:shadow-lg transition-all duration-300 hover:from-blue-700 hover:to-indigo-700"
+              onClick={() => setShowAllServices(!showAllServices)}
             >
-              <div className="flex justify-between items-start mb-6">
-                <div
-                  className={`w-16 h-16 rounded-xl flex items-center justify-center mr-4`}
-                  style={{
-                    backgroundColor: `${services[selectedService].color}20`,
-                    color: services[selectedService].color,
-                  }}
-                >
-                  {iconMap[services[selectedService].icon] || null}
-                </div>
-                <button
-                  onClick={() => setSelectedService(null)}
-                  className="text-gray-400 hover:text-gray-600"
-                >
-                  <Close />
+              {showAllServices ? 'Show Less' : (viewAllButton?.text || 'View All Services')}
                 </button>
               </div>
-
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                {services[selectedService].title}
-              </h3>
-              <p className="text-gray-600 mb-6">
-                {services[selectedService].description}
-              </p>
-
-              <h4 className="font-semibold text-gray-900 mb-3">
-                Service Details:
-              </h4>
-              <ul className="space-y-3 mb-8">
-                {services[selectedService].details.map((detail, i) => (
-                  <li key={i} className="flex items-start">
-                    <span
-                      className="w-2 h-2 rounded-full mt-2 mr-2 flex-shrink-0"
-                      style={{
-                        backgroundColor: services[selectedService].color,
-                      }}
-                    />
-                    <span className="text-gray-700">{detail}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div
-                className="p-4 rounded-lg mb-8"
-                style={{
-                  backgroundColor: `${services[selectedService].color}10`,
-                }}
-              >
-                <div
-                  className="text-sm font-medium"
-                  style={{ color: services[selectedService].color }}
-                >
-                  {services[selectedService].stats}
-                </div>
-              </div>
-
-              <button className="w-full px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-medium rounded-lg hover:shadow-md transition-all duration-300 flex items-center justify-center">
-                Get Started <ArrowRightAlt className="ml-2" />
-              </button>
-            </motion.div>
-          </motion.div>
         )}
-      </AnimatePresence>
+      </div>
     </section>
   );
 };

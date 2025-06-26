@@ -43,12 +43,12 @@ const Hero = ({ slides = [], stats = [] }) => {
         height: '100vh',
         minHeight: '800px',
         overflow: 'hidden',
-        backgroundColor: '#f8fafc',
+        backgroundColor: '#eff6ff', // Blue 50
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
       }}>
-        <Typography variant="h6">No hero content available</Typography>
+        <Typography variant="h6" sx={{ color: '#1e40af' }}>No hero content available</Typography>
       </Box>
     );
   }
@@ -59,7 +59,7 @@ const Hero = ({ slides = [], stats = [] }) => {
       height: '100vh',
       minHeight: '800px',
       overflow: 'hidden',
-      backgroundColor: '#f8fafc', // Light gray background fallback
+      backgroundColor: '#eff6ff', // Blue 50 background fallback
     }}>
       {/* Video Background */}
       <Box
@@ -89,7 +89,7 @@ const Hero = ({ slides = [], stats = [] }) => {
         left: 0,
         width: '100%',
         height: '100%',
-        background: 'linear-gradient(to right, rgba(248, 250, 252, 0.05) 0%, rgba(248, 250, 252, 0.05) 100%)',
+        background: 'linear-gradient(to right, rgba(239, 246, 255, 0.05) 0%, rgba(239, 246, 255, 0.05) 100%)',
         zIndex: 1
       }} />
 
@@ -138,7 +138,7 @@ const Hero = ({ slides = [], stats = [] }) => {
               fontWeight: 800,
               lineHeight: 1.2,
               mb: 3,
-              color: '#1e293b', // Gray 800
+              color: '#1e293b', // Blue 900
               maxWidth: '800px'
             }}>
               {slides[currentSlide].title}
@@ -146,7 +146,7 @@ const Hero = ({ slides = [], stats = [] }) => {
 
             <Typography variant="body1" sx={{
               fontSize: '1.2rem',
-              color: '#475569', // Gray 600
+              color: '#475569', // Blue 600
               maxWidth: '600px',
               mb: 4
             }}>
@@ -184,11 +184,11 @@ const Hero = ({ slides = [], stats = [] }) => {
                   fontSize: '1rem',
                   fontWeight: 500,
                   borderRadius: '8px',
-                  borderColor: '#94a3b8', // Gray 400
-                  color: '#334155', // Gray 700
+                  borderColor: '#94a3b8', // Blue 400
+                  color: '#334155', // Blue 700
                   '&:hover': {
-                    borderColor: '#64748b', // Gray 500
-                    backgroundColor: 'rgba(241, 245, 249, 0.5)' // Gray 50 with opacity
+                    borderColor: '#64748b', // Blue 500
+                    backgroundColor: 'rgba(239, 246, 255, 0.5)' // Blue 50 with opacity
                   }
                 }}
                 onClick={() => setIsPlaying(!isPlaying)}
@@ -214,13 +214,13 @@ const Hero = ({ slides = [], stats = [] }) => {
             sx={{
               bgcolor: 'white',
               boxShadow: 1,
-              border: '1px solid #e2e8f0', // Gray 200
+              border: '1px solid #e2e8f0', // Blue 200
               '&:hover': {
-                bgcolor: '#f1f5f9' // Gray 50
+                bgcolor: '#f1f5f9' // Blue 50
               }
             }}
           >
-            <ChevronLeft sx={{ color: '#334155' }} /> {/* Gray 700 */}
+            <ChevronLeft sx={{ color: '#334155' }} /> {/* Blue 700 */}
           </IconButton>
 
           <Box sx={{ display: 'flex', gap: 1 }}>
@@ -232,7 +232,7 @@ const Hero = ({ slides = [], stats = [] }) => {
                   width: index === currentSlide ? '24px' : '12px',
                   height: '12px',
                   borderRadius: '6px',
-                  bgcolor: index === currentSlide ? '#2563eb' : '#cbd5e1', // Blue 600 or Gray 300
+                  bgcolor: index === currentSlide ? '#2563eb' : '#cbd5e1', // Blue 600 or Blue 300
                   cursor: 'pointer',
                   transition: 'all 0.3s ease'
                 }}
@@ -245,13 +245,13 @@ const Hero = ({ slides = [], stats = [] }) => {
             sx={{
               bgcolor: 'white',
               boxShadow: 1,
-              border: '1px solid #e2e8f0', // Gray 200
+              border: '1px solid #e2e8f0', // Blue 200
               '&:hover': {
-                bgcolor: '#f1f5f9' // Gray 50
+                bgcolor: '#f1f5f9' // Blue 50
               }
             }}
           >
-            <ChevronRight sx={{ color: '#334155' }} /> {/* Gray 700 */}
+            <ChevronRight sx={{ color: '#334155' }} /> {/* Blue 700 */}
           </IconButton>
         </Box>
 
@@ -269,14 +269,14 @@ const Hero = ({ slides = [], stats = [] }) => {
             py: 2,
             borderRadius: '12px',
             boxShadow: 3,
-            border: '1px solid #e2e8f0' // Gray 200
+            border: '1px solid #e2e8f0' // Blue 200
           }}>
             {stats.map((stat, index) => (
               <Box key={index} sx={{ textAlign: 'center' }}>
                 <Typography variant="h5" sx={{ fontWeight: 700, color: '#2563eb' }}> {/* Blue 600 */}
                   {stat.value}
                 </Typography>
-                <Typography variant="caption" sx={{ color: '#64748b' }}> {/* Gray 500 */}
+                <Typography variant="caption" sx={{ color: '#64748b' }}> {/* Blue 500 */}
                   {stat.label}
                 </Typography>
               </Box>

@@ -42,7 +42,7 @@ const Navbar = ({ services = [], industries = [] }) => {
     <nav
       className={`fixed w-full z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-white/40  shadow-sm border-b border-gray-100"
+          ? "bg-white/40  shadow-sm border-b border-blue-100"
           : "bg-white"
       }`}
     >
@@ -57,7 +57,7 @@ const Navbar = ({ services = [], industries = [] }) => {
               B
             </span>
             <span
-              className={`text-xl font-semibold text-gray-800 transition-all duration-300 ${
+              className={`text-xl font-semibold text-blue-900 transition-all duration-300 ${
                 scrolled ? "opacity-0 w-0" : "opacity-100"
               }`}
             >
@@ -74,7 +74,7 @@ const Navbar = ({ services = [], industries = [] }) => {
                 className={`flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${
                   openDropdown === "services"
                     ? "text-blue-700 bg-blue-50"
-                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                    : "text-blue-600 hover:text-blue-900 hover:bg-blue-50"
                 }`}
               >
                 <span>Services</span>
@@ -82,7 +82,7 @@ const Navbar = ({ services = [], industries = [] }) => {
                   className={`ml-2 h-4 w-4 transition-transform ${
                     openDropdown === "services"
                       ? "rotate-180 text-blue-600"
-                      : "text-gray-400"
+                      : "text-blue-400"
                   }`}
                 />
               </button>
@@ -91,14 +91,14 @@ const Navbar = ({ services = [], industries = [] }) => {
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-100 z-50"
+                  className="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-blue-100 z-50"
                 >
                   <div className="py-1.5">
                     {services.map((service) => (
                       <a
                         key={service.title}
                         href="#"
-                        className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
+                        className="block px-4 py-2.5 text-sm text-blue-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
                       >
                         {service.title}
                       </a>
@@ -115,7 +115,7 @@ const Navbar = ({ services = [], industries = [] }) => {
                 className={`flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${
                   openDropdown === "industries"
                     ? "text-blue-700 bg-blue-50"
-                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                    : "text-blue-600 hover:text-blue-900 hover:bg-blue-50"
                 }`}
               >
                 <span>Industries</span>
@@ -123,7 +123,7 @@ const Navbar = ({ services = [], industries = [] }) => {
                   className={`ml-2 h-4 w-4 transition-transform ${
                     openDropdown === "industries"
                       ? "rotate-180 text-blue-600"
-                      : "text-gray-400"
+                      : "text-blue-400"
                   }`}
                 />
               </button>
@@ -132,14 +132,14 @@ const Navbar = ({ services = [], industries = [] }) => {
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-100 z-50"
+                  className="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-blue-100 z-50"
                 >
                   <div className="py-1.5">
                     {industries.map((item) => (
                       <a
                         key={item.label}
                         href="#"
-                        className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
+                        className="block px-4 py-2.5 text-sm text-blue-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
                       >
                         {item.label}
                       </a>
@@ -151,7 +151,7 @@ const Navbar = ({ services = [], industries = [] }) => {
 
             <a
               href="#"
-              className="px-4 py-2.5 text-sm font-medium text-gray-600 hover:text-gray-900 rounded-lg hover:bg-gray-50 transition-colors"
+              className="px-4 py-2.5 text-sm font-medium text-blue-600 hover:text-blue-900 rounded-lg hover:bg-blue-50 transition-colors"
             >
               About
             </a>
@@ -169,7 +169,7 @@ const Navbar = ({ services = [], industries = [] }) => {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:outline-none"
+              className="inline-flex items-center justify-center p-2 rounded-md text-blue-700 hover:text-blue-900 hover:bg-blue-100 focus:outline-none"
             >
               {mobileMenuOpen ? (
                 <XMarkIcon className="block h-6 w-6" />
@@ -193,7 +193,7 @@ const Navbar = ({ services = [], industries = [] }) => {
             <div>
               <button
                 onClick={() => toggleDropdown("mobileServices")}
-                className="w-full flex justify-between items-center px-3 py-3 text-base font-medium text-gray-700 rounded-lg hover:bg-gray-50"
+                className="w-full flex justify-between items-center px-3 py-3 text-base font-medium text-blue-700 rounded-lg hover:bg-blue-50"
               >
                 <span>Services</span>
                 <ChevronDownIcon
@@ -208,7 +208,7 @@ const Navbar = ({ services = [], industries = [] }) => {
                     <a
                       key={item}
                       href="#"
-                      className="block px-3 py-2.5 text-sm text-gray-600 rounded-lg hover:bg-blue-50 hover:text-blue-700"
+                      className="block px-3 py-2.5 text-sm text-blue-600 rounded-lg hover:bg-blue-50 hover:text-blue-700"
                     >
                       {item}
                     </a>
@@ -221,7 +221,7 @@ const Navbar = ({ services = [], industries = [] }) => {
             <div>
               <button
                 onClick={() => toggleDropdown("mobileIndustries")}
-                className="w-full flex justify-between items-center px-3 py-3 text-base font-medium text-gray-700 rounded-lg hover:bg-gray-50"
+                className="w-full flex justify-between items-center px-3 py-3 text-base font-medium text-blue-700 rounded-lg hover:bg-blue-50"
               >
                 <span>Industries</span>
                 <ChevronDownIcon
@@ -236,7 +236,7 @@ const Navbar = ({ services = [], industries = [] }) => {
                     <a
                       key={item}
                       href="#"
-                      className="block px-3 py-2.5 text-sm text-gray-600 rounded-lg hover:bg-blue-50 hover:text-blue-700"
+                      className="block px-3 py-2.5 text-sm text-blue-600 rounded-lg hover:bg-blue-50 hover:text-blue-700"
                     >
                       {item}
                     </a>
@@ -247,7 +247,7 @@ const Navbar = ({ services = [], industries = [] }) => {
 
             <a
               href="#"
-              className="block px-3 py-3 text-base font-medium text-gray-700 rounded-lg hover:bg-gray-50"
+              className="block px-3 py-3 text-base font-medium text-blue-700 rounded-lg hover:bg-blue-50"
             >
               About
             </a>
