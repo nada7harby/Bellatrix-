@@ -256,7 +256,7 @@ const Hero = () => {
       </div>
 
       {/* Custom CSS for Creative Animations */}
-      <style jsx>{`
+      <style>{`
         @keyframes bounce-slow {
           0%, 100% {
             transform: translateY(0);
