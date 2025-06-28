@@ -70,83 +70,209 @@ const Navbar = ({ services = [], industries = [] }) => {
     setOpenSubDropdown(null);
   };
 
-  // Services data with subcategories
+  // Services data with expanded subcategories
   const servicesData = {
     "NetSuite Services": [
-      "Implementation",
-      "Customization", 
-      "Integration",
-      "Migration",
-      "Support & Maintenance"
+      "NetSuite Implementation",
+      "NetSuite Customization", 
+      "NetSuite Integration",
+      "Data Migration Services",
+      "NetSuite Support & Maintenance",
+      "NetSuite Optimization",
+      "NetSuite Upgrade Services",
+      "NetSuite Health Check"
     ],
     "Consulting Services": [
       "Business Process Analysis",
-      "System Architecture",
+      "System Architecture Design",
       "Change Management",
-      "ROI Assessment"
+      "ROI Assessment & Planning",
+      "Digital Transformation",
+      "Process Automation",
+      "Workflow Optimization",
+      "Strategic Planning"
     ],
-    "Training Services": [
-      "User Training",
+    "Training & Education": [
+      "End User Training",
       "Administrator Training",
       "Custom Training Programs",
-      "Certification Programs"
+      "Certification Programs",
+      "Online Training Modules",
+      "Workshop Sessions",
+      "Documentation Services",
+      "Knowledge Transfer"
+    ],
+    "Development Services": [
+      "Custom SuiteScript Development",
+      "SuiteApp Development",
+      "Custom Forms & Fields",
+      "Workflow Development",
+      "SuiteFlow Automation",
+      "Custom Reports & Dashboards",
+      "API Development",
+      "Mobile App Development"
+    ],
+    "Support Services": [
+      "24/7 Technical Support",
+      "System Monitoring",
+      "Performance Optimization",
+      "Bug Fixes & Troubleshooting",
+      "User Support",
+      "System Administration",
+      "Backup & Recovery",
+      "Security Management"
     ]
   };
 
-  // Industries data with subcategories
+  // Industries data with expanded subcategories
   const industriesData = {
     "Manufacturing": [
-      "Automotive",
-      "Electronics",
-      "Pharmaceuticals",
+      "Automotive Manufacturing",
+      "Electronics & Technology",
+      "Pharmaceuticals & Life Sciences",
       "Food & Beverage",
-      "Aerospace"
+      "Aerospace & Defense",
+      "Chemical Manufacturing",
+      "Textile & Apparel",
+      "Industrial Equipment",
+      "Medical Devices",
+      "Consumer Goods"
     ],
     "Retail & E-commerce": [
       "Fashion & Apparel",
       "Consumer Electronics",
       "Home & Garden",
-      "Sports & Recreation"
+      "Sports & Recreation",
+      "Beauty & Cosmetics",
+      "Jewelry & Accessories",
+      "Books & Media",
+      "Toys & Games",
+      "Health & Wellness",
+      "Specialty Retail"
     ],
     "Professional Services": [
-      "Consulting",
+      "Management Consulting",
       "Legal Services",
-      "Accounting",
-      "Marketing Agencies"
+      "Accounting & Finance",
+      "Marketing Agencies",
+      "IT Services",
+      "Engineering Services",
+      "Architecture & Design",
+      "Real Estate Services",
+      "Human Resources",
+      "Business Process Outsourcing"
     ],
-    "Healthcare": [
-      "Hospitals",
-      "Clinics",
-      "Medical Devices",
-      "Pharmaceuticals"
+    "Healthcare & Life Sciences": [
+      "Hospitals & Health Systems",
+      "Medical Clinics",
+      "Medical Device Companies",
+      "Pharmaceutical Companies",
+      "Biotechnology",
+      "Healthcare IT",
+      "Medical Research",
+      "Dental Practices",
+      "Veterinary Services",
+      "Health Insurance"
+    ],
+    "Financial Services": [
+      "Banking & Credit Unions",
+      "Investment Management",
+      "Insurance Companies",
+      "Fintech Companies",
+      "Payment Processing",
+      "Wealth Management",
+      "Mortgage Services",
+      "Financial Planning",
+      "Accounting Firms",
+      "Tax Services"
+    ],
+    "Technology & Software": [
+      "Software Development",
+      "SaaS Companies",
+      "IT Consulting",
+      "Cybersecurity",
+      "Cloud Services",
+      "Data Analytics",
+      "Artificial Intelligence",
+      "Mobile App Development",
+      "Web Development",
+      "Digital Marketing"
     ]
   };
 
-  // Solutions data with subcategories
+  // Solutions data with expanded subcategories
   const solutionsData = {
     "ERP Solutions": [
       "Financial Management",
       "Supply Chain Management",
       "Inventory Management",
-      "Project Management"
+      "Project Management",
+      "Human Resources",
+      "Manufacturing Operations",
+      "Order Management",
+      "Procurement Management",
+      "Asset Management",
+      "Quality Management"
     ],
     "CRM Solutions": [
-      "Sales Automation",
-      "Customer Service",
+      "Sales Force Automation",
+      "Customer Service Management",
       "Marketing Automation",
-      "Lead Management"
+      "Lead Management",
+      "Contact Management",
+      "Opportunity Management",
+      "Customer Analytics",
+      "Campaign Management",
+      "Social CRM",
+      "Mobile CRM"
     ],
     "E-commerce Solutions": [
       "Online Store Setup",
-      "Payment Integration",
-      "Inventory Sync",
-      "Multi-channel Selling"
+      "Payment Gateway Integration",
+      "Inventory Synchronization",
+      "Multi-channel Selling",
+      "Order Fulfillment",
+      "Shipping Integration",
+      "Tax Management",
+      "Product Catalog Management",
+      "Customer Portal",
+      "Mobile Commerce"
     ],
     "Business Intelligence": [
       "Real-time Dashboards",
       "Custom Reports",
       "Data Analytics",
-      "KPI Tracking"
+      "KPI Tracking",
+      "Financial Reporting",
+      "Sales Analytics",
+      "Operational Reports",
+      "Executive Dashboards",
+      "Data Visualization",
+      "Predictive Analytics"
+    ],
+    "Integration Solutions": [
+      "Third-party Integrations",
+      "API Development",
+      "Data Migration",
+      "System Synchronization",
+      "Legacy System Integration",
+      "Cloud Integration",
+      "EDI Integration",
+      "Payment Integration",
+      "Shipping Integration",
+      "Tax Integration"
+    ],
+    "Industry-Specific Solutions": [
+      "Manufacturing Solutions",
+      "Retail Solutions",
+      "Healthcare Solutions",
+      "Professional Services Solutions",
+      "Non-profit Solutions",
+      "Distribution Solutions",
+      "Construction Solutions",
+      "Education Solutions",
+      "Government Solutions",
+      "Hospitality Solutions"
     ]
   };
 
@@ -255,7 +381,7 @@ const Navbar = ({ services = [], industries = [] }) => {
                                 animate={{ opacity: 1, x: 0 }}
                                 exit={{ opacity: 0, x: -10 }}
                                 transition={{ duration: 0.2 }}
-                                className="absolute top-0 left-full ml-2 w-64 bg-slate-800/95 backdrop-blur-xl rounded-xl shadow-2xl border border-slate-700/50 overflow-hidden"
+                                className="absolute top-0 left-full ml-2 w-72 bg-slate-800/95 backdrop-blur-xl rounded-xl shadow-2xl border border-slate-700/50 overflow-hidden max-h-96 overflow-y-auto"
                                 onMouseEnter={() => handleSubMenuEnter(category)}
                                 onMouseLeave={handleSubMenuLeave}
                               >
@@ -342,7 +468,7 @@ const Navbar = ({ services = [], industries = [] }) => {
                                 animate={{ opacity: 1, x: 0 }}
                                 exit={{ opacity: 0, x: -10 }}
                                 transition={{ duration: 0.2 }}
-                                className="absolute top-0 left-full ml-2 w-64 bg-slate-800/95 backdrop-blur-xl rounded-xl shadow-2xl border border-slate-700/50 overflow-hidden"
+                                className="absolute top-0 left-full ml-2 w-72 bg-slate-800/95 backdrop-blur-xl rounded-xl shadow-2xl border border-slate-700/50 overflow-hidden max-h-96 overflow-y-auto"
                                 onMouseEnter={() => handleSubMenuEnter(category)}
                                 onMouseLeave={handleSubMenuLeave}
                               >
@@ -429,7 +555,7 @@ const Navbar = ({ services = [], industries = [] }) => {
                                 animate={{ opacity: 1, x: 0 }}
                                 exit={{ opacity: 0, x: -10 }}
                                 transition={{ duration: 0.2 }}
-                                className="absolute top-0 left-full ml-2 w-64 bg-slate-800/95 backdrop-blur-xl rounded-xl shadow-2xl border border-slate-700/50 overflow-hidden"
+                                className="absolute top-0 left-full ml-2 w-72 bg-slate-800/95 backdrop-blur-xl rounded-xl shadow-2xl border border-slate-700/50 overflow-hidden max-h-96 overflow-y-auto"
                                 onMouseEnter={() => handleSubMenuEnter(category)}
                                 onMouseLeave={handleSubMenuLeave}
                               >
@@ -500,7 +626,7 @@ const Navbar = ({ services = [], industries = [] }) => {
             exit={{ opacity: 0, height: 0 }}
             className="lg:hidden bg-slate-800/95 backdrop-blur-xl shadow-lg border-t border-slate-700/50"
           >
-            <div className="px-4 pt-4 pb-6 space-y-2">
+            <div className="px-4 pt-4 pb-6 space-y-2 max-h-96 overflow-y-auto">
               <a
                 href="/"
                 className="block px-3 py-3 text-base font-medium text-slate-200 rounded-lg hover:bg-slate-700/50 hover:text-white transition-colors duration-300"
