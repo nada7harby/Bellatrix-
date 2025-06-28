@@ -152,27 +152,34 @@ const Navbar = ({ services = [], industries = [] }) => {
 
   return (
     <nav
-      className={`fixed w-full z-50 transition-all duration-300 ${
+      className={`fixed w-full z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-white/95 backdrop-blur-md shadow-lg border-b border-blue-100"
-          : "bg-white shadow-sm"
+          ? "bg-slate-900/80 backdrop-blur-xl shadow-2xl border-b border-slate-700/50"
+          : "bg-slate-900 shadow-lg"
       }`}
+      style={{
+        backgroundColor: scrolled ? 'rgba(15, 23, 42, 0.8)' : '#0f172a'
+      }}
     >
       {/* Accent top border */}
-      <div className="h-1 bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600"></div>
+      <div className={`h-1 transition-all duration-500 ${
+        scrolled 
+          ? "bg-gradient-to-r from-slate-500/60 via-slate-400/60 to-slate-500/60" 
+          : "bg-gradient-to-r from-slate-500 via-slate-400 to-slate-500"
+      }`}></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
           {/* Logo */}
           <a href="/" className="flex items-center group">
             <div className="relative">
-              <span className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2 rounded-lg mr-3 text-xl font-bold shadow-lg group-hover:shadow-xl transition-all duration-300">
+              <span className="bg-gradient-to-r from-slate-600 to-slate-700 text-white px-4 py-2 rounded-lg mr-3 text-xl font-bold shadow-lg group-hover:shadow-xl transition-all duration-300 border border-slate-500/30">
                 B
               </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg blur opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-slate-600 to-slate-700 rounded-lg blur opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
             </div>
             <span
-              className={`text-2xl font-bold bg-gradient-to-r from-blue-700 to-indigo-700 bg-clip-text text-transparent transition-all duration-300 ${
+              className={`text-2xl font-bold bg-gradient-to-r from-slate-200 to-white bg-clip-text text-transparent transition-all duration-300 ${
                 scrolled ? "opacity-0 w-0" : "opacity-100"
               }`}
             >
@@ -185,7 +192,7 @@ const Navbar = ({ services = [], industries = [] }) => {
             {/* Home */}
             <a
               href="/"
-              className="px-4 py-2.5 text-sm font-medium text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-all duration-300"
+              className="px-4 py-2.5 text-sm font-medium text-slate-200 hover:text-white hover:bg-slate-800/50 rounded-lg transition-all duration-300"
             >
               Home
             </a>
@@ -195,16 +202,16 @@ const Navbar = ({ services = [], industries = [] }) => {
               <button
                 className={`flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-300 ${
                   openDropdown === "services"
-                    ? "text-blue-700 bg-blue-50"
-                    : "text-blue-600 hover:text-blue-800 hover:bg-blue-50"
+                    ? "text-white bg-slate-800/70"
+                    : "text-slate-200 hover:text-white hover:bg-slate-800/50"
                 }`}
               >
                 <span>Services</span>
                 <ChevronDownIcon
                   className={`ml-2 h-4 w-4 transition-transform duration-300 ${
                     openDropdown === "services"
-                      ? "rotate-180 text-blue-600"
-                      : "text-blue-400"
+                      ? "rotate-180 text-slate-300"
+                      : "text-slate-400"
                   }`}
                 />
               </button>
@@ -216,7 +223,7 @@ const Navbar = ({ services = [], industries = [] }) => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute top-full left-0 mt-2 w-80 bg-white rounded-xl shadow-2xl border border-blue-100 overflow-hidden z-50"
+                    className="absolute top-full left-0 mt-2 w-80 bg-slate-800/95 backdrop-blur-xl rounded-xl shadow-2xl border border-slate-700/50 overflow-hidden z-50"
                     onMouseEnter={() => handleMenuEnter("services")}
                     onMouseLeave={handleMenuLeave}
                   >
@@ -228,16 +235,16 @@ const Navbar = ({ services = [], industries = [] }) => {
                           onMouseEnter={() => handleSubMenuEnter(category)}
                           onMouseLeave={handleSubMenuLeave}
                         >
-                          <div className="flex items-center justify-between p-3 rounded-lg hover:bg-blue-50 transition-colors duration-300 cursor-pointer group">
+                          <div className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-700/50 transition-colors duration-300 cursor-pointer group">
                             <div className="flex items-center space-x-3">
-                              <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center group-hover:bg-blue-200 transition-colors duration-300">
-                                <div className="w-3 h-3 bg-blue-600 rounded"></div>
+                              <div className="w-8 h-8 rounded-lg bg-slate-700/50 flex items-center justify-center group-hover:bg-slate-600/50 transition-colors duration-300 border border-slate-600/30">
+                                <div className="w-3 h-3 bg-slate-400 rounded"></div>
                               </div>
-                              <span className="font-semibold text-blue-900 group-hover:text-blue-700 transition-colors duration-300">
+                              <span className="font-semibold text-slate-200 group-hover:text-white transition-colors duration-300">
                                 {category}
                               </span>
                             </div>
-                            <ChevronRightIcon className="w-4 h-4 text-blue-400 group-hover:text-blue-600 transition-colors duration-300" />
+                            <ChevronRightIcon className="w-4 h-4 text-slate-400 group-hover:text-slate-300 transition-colors duration-300" />
                           </div>
 
                           {/* Sub Dropdown */}
@@ -248,19 +255,19 @@ const Navbar = ({ services = [], industries = [] }) => {
                                 animate={{ opacity: 1, x: 0 }}
                                 exit={{ opacity: 0, x: -10 }}
                                 transition={{ duration: 0.2 }}
-                                className="absolute top-0 left-full ml-2 w-64 bg-white rounded-xl shadow-2xl border border-blue-100 overflow-hidden"
+                                className="absolute top-0 left-full ml-2 w-64 bg-slate-800/95 backdrop-blur-xl rounded-xl shadow-2xl border border-slate-700/50 overflow-hidden"
                                 onMouseEnter={() => handleSubMenuEnter(category)}
                                 onMouseLeave={handleSubMenuLeave}
                               >
                                 <div className="p-2">
-                                  <div className="px-3 py-2 border-b border-blue-100 mb-2">
-                                    <h4 className="font-bold text-blue-800 text-sm">{category}</h4>
+                                  <div className="px-3 py-2 border-b border-slate-700/50 mb-2">
+                                    <h4 className="font-bold text-slate-200 text-sm">{category}</h4>
                                   </div>
                                   {items.map((item, index) => (
                                     <a
                                       key={index}
                                       href="#"
-                                      className="block px-3 py-2 text-sm text-blue-700 hover:text-blue-900 hover:bg-blue-50 rounded-lg transition-colors duration-300"
+                                      className="block px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-700/50 rounded-lg transition-colors duration-300"
                                     >
                                       {item}
                                     </a>
@@ -282,16 +289,16 @@ const Navbar = ({ services = [], industries = [] }) => {
               <button
                 className={`flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-300 ${
                   openDropdown === "industries"
-                    ? "text-blue-700 bg-blue-50"
-                    : "text-blue-600 hover:text-blue-800 hover:bg-blue-50"
+                    ? "text-white bg-slate-800/70"
+                    : "text-slate-200 hover:text-white hover:bg-slate-800/50"
                 }`}
               >
                 <span>Industries</span>
                 <ChevronDownIcon
                   className={`ml-2 h-4 w-4 transition-transform duration-300 ${
                     openDropdown === "industries"
-                      ? "rotate-180 text-blue-600"
-                      : "text-blue-400"
+                      ? "rotate-180 text-slate-300"
+                      : "text-slate-400"
                   }`}
                 />
               </button>
@@ -303,7 +310,7 @@ const Navbar = ({ services = [], industries = [] }) => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute top-full left-0 mt-2 w-80 bg-white rounded-xl shadow-2xl border border-blue-100 overflow-hidden z-50"
+                    className="absolute top-full left-0 mt-2 w-80 bg-slate-800/95 backdrop-blur-xl rounded-xl shadow-2xl border border-slate-700/50 overflow-hidden z-50"
                     onMouseEnter={() => handleMenuEnter("industries")}
                     onMouseLeave={handleMenuLeave}
                   >
@@ -315,16 +322,16 @@ const Navbar = ({ services = [], industries = [] }) => {
                           onMouseEnter={() => handleSubMenuEnter(category)}
                           onMouseLeave={handleSubMenuLeave}
                         >
-                          <div className="flex items-center justify-between p-3 rounded-lg hover:bg-blue-50 transition-colors duration-300 cursor-pointer group">
+                          <div className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-700/50 transition-colors duration-300 cursor-pointer group">
                             <div className="flex items-center space-x-3">
-                              <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center group-hover:bg-blue-200 transition-colors duration-300">
-                                <div className="w-3 h-3 bg-blue-600 rounded"></div>
+                              <div className="w-8 h-8 rounded-lg bg-slate-700/50 flex items-center justify-center group-hover:bg-slate-600/50 transition-colors duration-300 border border-slate-600/30">
+                                <div className="w-3 h-3 bg-slate-400 rounded"></div>
                               </div>
-                              <span className="font-semibold text-blue-900 group-hover:text-blue-700 transition-colors duration-300">
+                              <span className="font-semibold text-slate-200 group-hover:text-white transition-colors duration-300">
                                 {category}
                               </span>
                             </div>
-                            <ChevronRightIcon className="w-4 h-4 text-blue-400 group-hover:text-blue-600 transition-colors duration-300" />
+                            <ChevronRightIcon className="w-4 h-4 text-slate-400 group-hover:text-slate-300 transition-colors duration-300" />
                           </div>
 
                           {/* Sub Dropdown */}
@@ -335,19 +342,19 @@ const Navbar = ({ services = [], industries = [] }) => {
                                 animate={{ opacity: 1, x: 0 }}
                                 exit={{ opacity: 0, x: -10 }}
                                 transition={{ duration: 0.2 }}
-                                className="absolute top-0 left-full ml-2 w-64 bg-white rounded-xl shadow-2xl border border-blue-100 overflow-hidden"
+                                className="absolute top-0 left-full ml-2 w-64 bg-slate-800/95 backdrop-blur-xl rounded-xl shadow-2xl border border-slate-700/50 overflow-hidden"
                                 onMouseEnter={() => handleSubMenuEnter(category)}
                                 onMouseLeave={handleSubMenuLeave}
                               >
                                 <div className="p-2">
-                                  <div className="px-3 py-2 border-b border-blue-100 mb-2">
-                                    <h4 className="font-bold text-blue-800 text-sm">{category}</h4>
+                                  <div className="px-3 py-2 border-b border-slate-700/50 mb-2">
+                                    <h4 className="font-bold text-slate-200 text-sm">{category}</h4>
                                   </div>
                                   {items.map((item, index) => (
                                     <a
                                       key={index}
                                       href="#"
-                                      className="block px-3 py-2 text-sm text-blue-700 hover:text-blue-900 hover:bg-blue-50 rounded-lg transition-colors duration-300"
+                                      className="block px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-700/50 rounded-lg transition-colors duration-300"
                                     >
                                       {item}
                                     </a>
@@ -369,16 +376,16 @@ const Navbar = ({ services = [], industries = [] }) => {
               <button
                 className={`flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-300 ${
                   openDropdown === "solutions"
-                    ? "text-blue-700 bg-blue-50"
-                    : "text-blue-600 hover:text-blue-800 hover:bg-blue-50"
+                    ? "text-white bg-slate-800/70"
+                    : "text-slate-200 hover:text-white hover:bg-slate-800/50"
                 }`}
               >
                 <span>Solutions</span>
                 <ChevronDownIcon
                   className={`ml-2 h-4 w-4 transition-transform duration-300 ${
                     openDropdown === "solutions"
-                      ? "rotate-180 text-blue-600"
-                      : "text-blue-400"
+                      ? "rotate-180 text-slate-300"
+                      : "text-slate-400"
                   }`}
                 />
               </button>
@@ -390,7 +397,7 @@ const Navbar = ({ services = [], industries = [] }) => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute top-full left-0 mt-2 w-80 bg-white rounded-xl shadow-2xl border border-blue-100 overflow-hidden z-50"
+                    className="absolute top-full left-0 mt-2 w-80 bg-slate-800/95 backdrop-blur-xl rounded-xl shadow-2xl border border-slate-700/50 overflow-hidden z-50"
                     onMouseEnter={() => handleMenuEnter("solutions")}
                     onMouseLeave={handleMenuLeave}
                   >
@@ -402,16 +409,16 @@ const Navbar = ({ services = [], industries = [] }) => {
                           onMouseEnter={() => handleSubMenuEnter(category)}
                           onMouseLeave={handleSubMenuLeave}
                         >
-                          <div className="flex items-center justify-between p-3 rounded-lg hover:bg-blue-50 transition-colors duration-300 cursor-pointer group">
+                          <div className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-700/50 transition-colors duration-300 cursor-pointer group">
                             <div className="flex items-center space-x-3">
-                              <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center group-hover:bg-blue-200 transition-colors duration-300">
-                                <div className="w-3 h-3 bg-blue-600 rounded"></div>
+                              <div className="w-8 h-8 rounded-lg bg-slate-700/50 flex items-center justify-center group-hover:bg-slate-600/50 transition-colors duration-300 border border-slate-600/30">
+                                <div className="w-3 h-3 bg-slate-400 rounded"></div>
                               </div>
-                              <span className="font-semibold text-blue-900 group-hover:text-blue-700 transition-colors duration-300">
+                              <span className="font-semibold text-slate-200 group-hover:text-white transition-colors duration-300">
                                 {category}
                               </span>
                             </div>
-                            <ChevronRightIcon className="w-4 h-4 text-blue-400 group-hover:text-blue-600 transition-colors duration-300" />
+                            <ChevronRightIcon className="w-4 h-4 text-slate-400 group-hover:text-slate-300 transition-colors duration-300" />
                           </div>
 
                           {/* Sub Dropdown */}
@@ -422,19 +429,19 @@ const Navbar = ({ services = [], industries = [] }) => {
                                 animate={{ opacity: 1, x: 0 }}
                                 exit={{ opacity: 0, x: -10 }}
                                 transition={{ duration: 0.2 }}
-                                className="absolute top-0 left-full ml-2 w-64 bg-white rounded-xl shadow-2xl border border-blue-100 overflow-hidden"
+                                className="absolute top-0 left-full ml-2 w-64 bg-slate-800/95 backdrop-blur-xl rounded-xl shadow-2xl border border-slate-700/50 overflow-hidden"
                                 onMouseEnter={() => handleSubMenuEnter(category)}
                                 onMouseLeave={handleSubMenuLeave}
                               >
                                 <div className="p-2">
-                                  <div className="px-3 py-2 border-b border-blue-100 mb-2">
-                                    <h4 className="font-bold text-blue-800 text-sm">{category}</h4>
+                                  <div className="px-3 py-2 border-b border-slate-700/50 mb-2">
+                                    <h4 className="font-bold text-slate-200 text-sm">{category}</h4>
                                   </div>
                                   {items.map((item, index) => (
                                     <a
                                       key={index}
                                       href="#"
-                                      className="block px-3 py-2 text-sm text-blue-700 hover:text-blue-900 hover:bg-blue-50 rounded-lg transition-colors duration-300"
+                                      className="block px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-700/50 rounded-lg transition-colors duration-300"
                                     >
                                       {item}
                                     </a>
@@ -454,7 +461,7 @@ const Navbar = ({ services = [], industries = [] }) => {
             {/* About */}
             <a
               href="#about"
-              className="px-4 py-2.5 text-sm font-medium text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-all duration-300"
+              className="px-4 py-2.5 text-sm font-medium text-slate-200 hover:text-white hover:bg-slate-800/50 rounded-lg transition-all duration-300"
             >
               About
             </a>
@@ -462,7 +469,7 @@ const Navbar = ({ services = [], industries = [] }) => {
             {/* Contact button */}
             <a
               href="#contact"
-              className="ml-4 px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-medium rounded-lg hover:shadow-lg transition-all duration-300 hover:from-blue-700 hover:to-indigo-700 transform hover:scale-105"
+              className="ml-4 px-6 py-2.5 bg-gradient-to-r from-slate-600 to-slate-700 text-white text-sm font-medium rounded-lg hover:shadow-lg transition-all duration-300 hover:from-slate-700 hover:to-slate-800 transform hover:scale-105 border border-slate-500/30"
             >
               Contact
             </a>
@@ -472,7 +479,7 @@ const Navbar = ({ services = [], industries = [] }) => {
           <div className="lg:hidden flex items-center">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-blue-700 hover:text-blue-900 hover:bg-blue-100 focus:outline-none transition-colors duration-300"
+              className="inline-flex items-center justify-center p-2 rounded-md text-slate-200 hover:text-white hover:bg-slate-800/50 focus:outline-none transition-colors duration-300"
             >
               {mobileMenuOpen ? (
                 <XMarkIcon className="block h-6 w-6" />
@@ -491,12 +498,12 @@ const Navbar = ({ services = [], industries = [] }) => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-white shadow-lg border-t border-blue-100"
+            className="lg:hidden bg-slate-800/95 backdrop-blur-xl shadow-lg border-t border-slate-700/50"
           >
             <div className="px-4 pt-4 pb-6 space-y-2">
               <a
                 href="/"
-                className="block px-3 py-3 text-base font-medium text-blue-700 rounded-lg hover:bg-blue-50 transition-colors duration-300"
+                className="block px-3 py-3 text-base font-medium text-slate-200 rounded-lg hover:bg-slate-700/50 hover:text-white transition-colors duration-300"
               >
                 Home
               </a>
@@ -505,7 +512,7 @@ const Navbar = ({ services = [], industries = [] }) => {
               <div>
                 <button
                   onClick={() => toggleDropdown("mobileServices")}
-                  className="w-full flex justify-between items-center px-3 py-3 text-base font-medium text-blue-700 rounded-lg hover:bg-blue-50 transition-colors duration-300"
+                  className="w-full flex justify-between items-center px-3 py-3 text-base font-medium text-slate-200 rounded-lg hover:bg-slate-700/50 hover:text-white transition-colors duration-300"
                 >
                   <span>Services</span>
                   <ChevronDownIcon
@@ -526,7 +533,7 @@ const Navbar = ({ services = [], industries = [] }) => {
                         <a
                           key={category}
                           href="#"
-                          className="block px-3 py-2 text-sm text-blue-600 rounded-lg hover:bg-blue-50 transition-colors duration-300"
+                          className="block px-3 py-2 text-sm text-slate-300 rounded-lg hover:bg-slate-700/50 hover:text-white transition-colors duration-300"
                         >
                           {category}
                         </a>
@@ -540,7 +547,7 @@ const Navbar = ({ services = [], industries = [] }) => {
               <div>
                 <button
                   onClick={() => toggleDropdown("mobileIndustries")}
-                  className="w-full flex justify-between items-center px-3 py-3 text-base font-medium text-blue-700 rounded-lg hover:bg-blue-50 transition-colors duration-300"
+                  className="w-full flex justify-between items-center px-3 py-3 text-base font-medium text-slate-200 rounded-lg hover:bg-slate-700/50 hover:text-white transition-colors duration-300"
                 >
                   <span>Industries</span>
                   <ChevronDownIcon
@@ -561,7 +568,7 @@ const Navbar = ({ services = [], industries = [] }) => {
                         <a
                           key={category}
                           href="#"
-                          className="block px-3 py-2 text-sm text-blue-600 rounded-lg hover:bg-blue-50 transition-colors duration-300"
+                          className="block px-3 py-2 text-sm text-slate-300 rounded-lg hover:bg-slate-700/50 hover:text-white transition-colors duration-300"
                         >
                           {category}
                         </a>
@@ -575,7 +582,7 @@ const Navbar = ({ services = [], industries = [] }) => {
               <div>
                 <button
                   onClick={() => toggleDropdown("mobileSolutions")}
-                  className="w-full flex justify-between items-center px-3 py-3 text-base font-medium text-blue-700 rounded-lg hover:bg-blue-50 transition-colors duration-300"
+                  className="w-full flex justify-between items-center px-3 py-3 text-base font-medium text-slate-200 rounded-lg hover:bg-slate-700/50 hover:text-white transition-colors duration-300"
                 >
                   <span>Solutions</span>
                   <ChevronDownIcon
@@ -596,7 +603,7 @@ const Navbar = ({ services = [], industries = [] }) => {
                         <a
                           key={category}
                           href="#"
-                          className="block px-3 py-2 text-sm text-blue-600 rounded-lg hover:bg-blue-50 transition-colors duration-300"
+                          className="block px-3 py-2 text-sm text-slate-300 rounded-lg hover:bg-slate-700/50 hover:text-white transition-colors duration-300"
                         >
                           {category}
                         </a>
@@ -608,7 +615,7 @@ const Navbar = ({ services = [], industries = [] }) => {
 
               <a
                 href="#about"
-                className="block px-3 py-3 text-base font-medium text-blue-700 rounded-lg hover:bg-blue-50 transition-colors duration-300"
+                className="block px-3 py-3 text-base font-medium text-slate-200 rounded-lg hover:bg-slate-700/50 hover:text-white transition-colors duration-300"
               >
                 About
               </a>
@@ -616,7 +623,7 @@ const Navbar = ({ services = [], industries = [] }) => {
               {/* Mobile Contact button */}
               <a
                 href="#contact"
-                className="block w-full px-4 py-3 mt-4 text-center bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-300"
+                className="block w-full px-4 py-3 mt-4 text-center bg-gradient-to-r from-slate-600 to-slate-700 text-white font-medium rounded-lg hover:from-slate-700 hover:to-slate-800 transition-all duration-300 border border-slate-500/30"
               >
                 Contact
               </a>
