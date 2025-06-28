@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Training = () => {
     const [isProgramModalOpen, setIsProgramModalOpen] = useState(false);
@@ -6,6 +6,64 @@ const Training = () => {
     const [isContactModalOpen, setIsContactModalOpen] = useState(false);
     const [isFeatureModalOpen, setIsFeatureModalOpen] = useState(false);
     const [selectedFeature, setSelectedFeature] = useState(null);
+
+    // Video Protection
+    useEffect(() => {
+        // Disable right-click context menu
+        const handleContextMenu = (e) => {
+            e.preventDefault();
+            return false;
+        };
+
+        // Disable drag and drop
+        const handleDragStart = (e) => {
+            e.preventDefault();
+            return false;
+        };
+
+        // Disable text selection
+        const handleSelectStart = (e) => {
+            e.preventDefault();
+            return false;
+        };
+
+        // Disable F12, Ctrl+Shift+I, Ctrl+U (basic protection)
+        const handleKeyDown = (e) => {
+            // F12
+            if (e.keyCode === 123) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+Shift+I (DevTools)
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+U (View Source)
+            if (e.ctrlKey && e.keyCode === 85) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+S (Save Page)
+            if (e.ctrlKey && e.keyCode === 83) {
+                e.preventDefault();
+                return false;
+            }
+        };
+
+        document.addEventListener('contextmenu', handleContextMenu);
+        document.addEventListener('dragstart', handleDragStart);
+        document.addEventListener('selectstart', handleSelectStart);
+        document.addEventListener('keydown', handleKeyDown);
+
+        // Cleanup
+        return () => {
+            document.removeEventListener('contextmenu', handleContextMenu);
+            document.removeEventListener('dragstart', handleDragStart);
+            document.removeEventListener('selectstart', handleSelectStart);
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, []);
 
     const openProgramModal = (program) => {
         setSelectedProgram(program);
@@ -749,20 +807,50 @@ const Training = () => {
             {/* Hero Section with Video */}
             <div className="min-h-screen relative overflow-hidden pt-20">
                 {/* Background Video with Enhanced Effects */}
-                <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    className="absolute inset-0 w-full h-full object-cover transform scale-105 hover:scale-110 transition-transform duration-[8s] ease-in-out"
-                    style={{ 
-                        filter: 'brightness(0.7) contrast(1.2) saturate(1.3) hue-rotate(10deg)',
-                        animation: 'video-enhance 20s ease-in-out infinite'
-                    }}
+                <div 
+                    className="absolute inset-0 w-full h-full"
+                    onContextMenu={(e) => e.preventDefault()}
+                    onDragStart={(e) => e.preventDefault()}
+                    onDrop={(e) => e.preventDefault()}
+                    onSelectStart={(e) => e.preventDefault()}
+                    style={{ userSelect: 'none', WebkitUserSelect: 'none' }}
                 >
-                    <source src="/trainingHeroSectionTwo.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                </video>
+                    <video
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        controlsList="nodownload nofullscreen noremoteplayback"
+                        disablePictureInPicture
+                        disableRemotePlayback
+                        onContextMenu={(e) => e.preventDefault()}
+                        onDragStart={(e) => e.preventDefault()}
+                        onDrop={(e) => e.preventDefault()}
+                        className="absolute inset-0 w-full h-full object-cover transform scale-105 hover:scale-110 transition-transform duration-[8s] ease-in-out pointer-events-none"
+                        style={{ 
+                            filter: 'brightness(0.7) contrast(1.2) saturate(1.3) hue-rotate(10deg)',
+                            animation: 'video-enhance 20s ease-in-out infinite',
+                            userSelect: 'none',
+                            WebkitUserSelect: 'none'
+                        }}
+                    >
+                        <source src="/trainingHeroSectionTwo.mp4" type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
+                    
+                    {/* Invisible overlay for additional protection */}
+                    <div 
+                        className="absolute inset-0 w-full h-full pointer-events-none" 
+                        onContextMenu={(e) => e.preventDefault()}
+                        onDragStart={(e) => e.preventDefault()}
+                        onDrop={(e) => e.preventDefault()}
+                        style={{ 
+                            userSelect: 'none', 
+                            WebkitUserSelect: 'none',
+                            zIndex: 1
+                        }}
+                    />
+                </div>
                 
                 {/* Video Enhancement Layers */}
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-blue-400/15 z-5 animate-video-pulse"></div>
@@ -884,7 +972,7 @@ const Training = () => {
                         <div className="text-center mb-8">
                             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight text-white animate-slide-up">
                                 <span className="inline-block animate-text-glow">Professional</span>{' '}
-                                <span className="inline-block bg-gradient-to-r from-white via-white to-white bg-clip-text text-transparent animate-gradient-text">
+                                <span className="inline-block bg-gradient-to-r from-blue-400 via-blue-500 to-blue-400 bg-clip-text text-transparent animate-gradient-text">
                                     Training
                                 </span>
                                 <br />
@@ -899,10 +987,10 @@ const Training = () => {
                             <p className="text-lg md:text-xl lg:text-2xl text-gray-200 leading-relaxed max-w-4xl mx-auto animate-fade-in">
                                 Empower your team with{' '}
                                 <span className="relative inline-block">
-                                    <span className="bg-gradient-to-r from-white to-white bg-clip-text text-transparent font-semibold">
+                                    <span className="bg-gradient-to-r from-blue-400 via-blue-500 to-blue-400 bg-clip-text text-transparent font-semibold">
                                         comprehensive training solutions
                                     </span>
-                                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-white to-white animate-underline-expand"></span>
+                                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-blue-400 to-blue-500 animate-underline-expand"></span>
                                 </span>
                                 {' '}designed to enhance skills and drive success
                             </p>
@@ -1502,10 +1590,10 @@ const Training = () => {
 
             {/* Program Details Modal */}
             {isProgramModalOpen && selectedProgram && (
-                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-                    <div className="bg-white rounded-2xl max-w-4xl w-full h-auto relative transform transition-all duration-300 scale-100 shadow-2xl max-h-[90vh] overflow-y-auto custom-scrollbar">
+                <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+                    <div className="bg-white/10 backdrop-blur-xl rounded-2xl max-w-4xl w-full h-auto relative transform transition-all duration-300 scale-100 shadow-2xl max-h-[90vh] overflow-y-auto border border-white/20 custom-scrollbar" style={{backgroundColor: '#001038', backdropFilter: 'blur(20px)'}}>
                         {/* Header */}
-                        <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-t-2xl p-6 text-white relative">
+                        <div className="rounded-t-2xl p-6 text-white relative border-b border-white/20" style={{backgroundColor: '#001038'}}>
                             <button 
                                 onClick={closeProgramModal}
                                 className="absolute top-4 right-4 text-white/80 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-full"
@@ -1516,86 +1604,86 @@ const Training = () => {
                             </button>
                             
                             <div className="flex items-center">
-                                <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mr-4 backdrop-blur-sm">
+                                <div className="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center mr-4 backdrop-blur-sm">
                                     {selectedProgram.icon}
                                         </div>
                                 <div>
-                                    <h3 className="text-2xl font-bold mb-2">{selectedProgram.title}</h3>
-                                    <p className="text-blue-100">{selectedProgram.shortDescription}</p>
+                                    <h3 className="text-xl font-bold mb-1 text-white">{selectedProgram.title}</h3>
+                                    <p className="text-gray-300 text-sm">{selectedProgram.shortDescription}</p>
                                 </div>
                             </div>
                         </div>
                         
                         {/* Content */}
-                        <div className="p-8">
-                            <div className="mb-8">
-                                <h4 className="text-xl font-bold text-gray-800 mb-4">Program Overview</h4>
-                                <p className="text-gray-600 leading-relaxed text-lg">
+                        <div className="p-6" style={{backgroundColor: '#001038'}}>
+                            <div className="mb-6">
+                                <h4 className="text-lg font-bold text-white mb-3">Program Overview</h4>
+                                <p className="text-gray-300 leading-relaxed">
                                     {selectedProgram.longDescription}
                                 </p>
                             </div>
 
                             {/* Program Features */}
-                            <div className="mb-8">
-                                <h4 className="text-xl font-bold text-gray-800 mb-4">What You'll Learn</h4>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="mb-6">
+                                <h4 className="text-lg font-bold text-white mb-3">What You'll Learn</h4>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                     <div className="flex items-start space-x-3">
-                                        <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
-                                        <span className="text-gray-600">Hands-on practical exercises</span>
+                                        <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
+                                        <span className="text-gray-300 leading-relaxed text-sm">Hands-on practical exercises</span>
                                     </div>
                                     <div className="flex items-start space-x-3">
-                                        <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
-                                        <span className="text-gray-600">Real-world case studies</span>
+                                        <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
+                                        <span className="text-gray-300 leading-relaxed text-sm">Real-world case studies</span>
                                     </div>
                                     <div className="flex items-start space-x-3">
-                                        <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
-                                        <span className="text-gray-600">Expert instructor guidance</span>
+                                        <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
+                                        <span className="text-gray-300 leading-relaxed text-sm">Expert instructor guidance</span>
                                     </div>
                                     <div className="flex items-start space-x-3">
-                                        <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
-                                        <span className="text-gray-600">Certification preparation</span>
+                                        <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
+                                        <span className="text-gray-300 leading-relaxed text-sm">Certification preparation</span>
                                     </div>
                                     <div className="flex items-start space-x-3">
-                                        <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
-                                        <span className="text-gray-600">Interactive learning materials</span>
+                                        <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
+                                        <span className="text-gray-300 leading-relaxed text-sm">Interactive learning materials</span>
                                     </div>
                                     <div className="flex items-start space-x-3">
-                                        <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
-                                        <span className="text-gray-600">Post-training support</span>
+                                        <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
+                                        <span className="text-gray-300 leading-relaxed text-sm">Post-training support</span>
                                     </div>
                                     </div>
                                 </div>
 
                             {/* Training Details */}
-                            <div className="bg-gray-50 rounded-xl p-6 mb-8">
-                                <h4 className="text-lg font-bold text-gray-800 mb-4">Training Details</h4>
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div className="bg-white/5 border border-white/20 rounded-xl p-5 mb-6">
+                                <h4 className="text-base font-bold text-white mb-3">Training Details</h4>
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                     <div className="text-center">
-                                        <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-2">
-                                            <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <div className="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center mx-auto mb-2">
+                                            <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                             </svg>
                                         </div>
-                                        <h5 className="font-semibold text-gray-800 mb-1">Duration</h5>
-                                        <p className="text-sm text-gray-600">2-5 Days Intensive</p>
+                                        <h5 className="font-semibold text-white mb-1 text-xs">Duration</h5>
+                                        <p className="text-xs text-blue-400 font-bold">2-5 Days Intensive</p>
                                     </div>
                                     <div className="text-center">
-                                        <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-2">
-                                            <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <div className="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center mx-auto mb-2">
+                                            <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                                             </svg>
                                         </div>
-                                        <h5 className="font-semibold text-gray-800 mb-1">Format</h5>
-                                        <p className="text-sm text-gray-600">In-Person / Virtual</p>
+                                        <h5 className="font-semibold text-white mb-1 text-xs">Format</h5>
+                                        <p className="text-xs text-blue-400 font-bold">In-Person / Virtual</p>
                                     </div>
                                     <div className="text-center">
-                                        <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-2">
-                                            <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <div className="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center mx-auto mb-2">
+                                            <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                             </svg>
                                         </div>
-                                        <h5 className="font-semibold text-gray-800 mb-1">Certificate</h5>
-                                        <p className="text-sm text-gray-600">Completion Certificate</p>
+                                        <h5 className="font-semibold text-white mb-1 text-xs">Certificate</h5>
+                                        <p className="text-xs text-blue-400 font-bold">Completion Certificate</p>
                                     </div>
                                 </div>
                             </div>
@@ -1604,7 +1692,7 @@ const Training = () => {
                             <div className="text-center">
                                 <button 
                                     onClick={openContactModal}
-                                    className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg"
                                 >
                                     Contact Us for This Program
                                 </button>
