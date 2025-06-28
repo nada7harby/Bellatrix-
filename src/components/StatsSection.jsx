@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { TrendingUp, Users, CheckCircle, Star } from '@mui/icons-material';
+import { TrendingUp, People, CheckCircle, Star } from '@mui/icons-material';
 
 const StatsSection = ({ stats = [] }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -11,7 +11,7 @@ const StatsSection = ({ stats = [] }) => {
     { value: "200+", label: "Projects Completed", icon: <CheckCircle className="w-8 h-8" /> },
     { value: "98%", label: "Client Satisfaction", icon: <Star className="w-8 h-8" /> },
     { value: "15+", label: "Years Experience", icon: <TrendingUp className="w-8 h-8" /> },
-    { value: "50+", label: "Team Members", icon: <Users className="w-8 h-8" /> }
+    { value: "50+", label: "Team Members", icon: <People className="w-8 h-8" /> }
   ];
 
   const displayStats = stats.length > 0 ? stats.map((stat, index) => ({
